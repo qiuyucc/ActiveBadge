@@ -10,7 +10,8 @@ const Button = ({ mode, style, children, ...props }) => (
       mode === 'outlined' && { backgroundColor: theme.colors.surface },
       style,
     ]}
-    labelStyle={styles.text}
+    // labelStyle={styles.text}
+    labelStyle={[(mode==="contained") ? styles.logText : styles.text]}
     mode={mode}
     {...props}
   >
@@ -28,6 +29,12 @@ const styles = StyleSheet.create({
     fontSize: 15,
     lineHeight: 26,
   },
+    logText: {
+        fontWeight: 'bold',
+        fontSize: 15,
+        lineHeight: 26,
+        color: "#FFFFFF",
+    },
 });
 
 export default memo(Button);

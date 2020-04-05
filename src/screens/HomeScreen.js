@@ -13,7 +13,7 @@ const HomeScreen = ({ navigation }) => (
     <Paragraph>
         Tackling childhood obesity
     </Paragraph>
-    <Button mode="contained" onPress={() => navigation.navigate('LoginScreen')}>
+    <Button mode="contained" style={{textColor: "#FFFFFF"}} onPress={() => navigation.navigate('LoginScreen')}>
       Login
     </Button>
     <Button
