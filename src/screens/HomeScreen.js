@@ -13,7 +13,7 @@ const HomeScreen = ({ navigation }) => (
     <Paragraph>
         Tackling childhood obesity
     </Paragraph>
-    <Button mode="contained" style={{textColor: "#FFFFFF"}} onPress={() => navigation.navigate('LoginScreen')}>
+    <Button mode="contained"  onPress={() => navigation.navigate('LoginScreen')}>
       Login
     </Button>
     <Button
@@ -22,6 +22,9 @@ const HomeScreen = ({ navigation }) => (
     >
       Sign Up
     </Button>
+      <Button mode="outlined" onPress={() => navigation.navigate('AvatarScreen')}>
+          Avatar
+      </Button>
   </Background>
 );
 
