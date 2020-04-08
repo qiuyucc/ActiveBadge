@@ -23,7 +23,8 @@ const LoginScreen = ({ navigation }) => {
       return;
     }
 
-    navigation.navigate('Dashboard');
+    //navigation.navigate('Dashboard');
+      {navigation.navigate('Dash')}
   };
 
   return (
