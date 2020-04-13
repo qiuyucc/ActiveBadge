@@ -25,6 +25,12 @@ const HomeScreen = ({ navigation }) => (
       <Button mode="outlined" onPress={() => navigation.navigate('AvatarScreen')}>
           Avatar
       </Button>
+      <Button mode="outlined" onPress={() => navigation.navigate('ActivityScreen')}>
+          Activity
+      </Button>
+      <Button mode="outlined" onPress={() => navigation.navigate('Graphs')}>
+          Graphs
+      </Button>
   </Background>
 );
 
