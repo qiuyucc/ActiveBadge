@@ -12,6 +12,12 @@ import {
     ForgotPasswordScreen,
     Dashboard,
     TestScreen,
+    ActivityScreen,
+    AvatarScreen,
+    BarScreen,
+    LineScreen,
+    PieScreen,
+    Graphs
 } from './screens';
 
 const Router1 = createStackNavigator(
@@ -24,14 +30,21 @@ const Router1 = createStackNavigator(
         TestScreen: {
             screen: TestScreen,
             navigationOptions: {}
-        }
+        },
+        ActivityScreen,
+        AvatarScreen,
+        BarScreen,
+        LineScreen,
+        PieScreen,
+        Graphs
+
     },
     {
         initialRouteName: 'HomeScreen',
         headerMode: 'none',
     }
 );
-
+//bottom navigator
 const Router2 = createMaterialBottomTabNavigator(
     {
         HomeScreen: {

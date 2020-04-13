@@ -21,7 +21,18 @@ const HomeScreen = ({navigation}) => (
             onPress={() => navigation.navigate('RegisterScreen')}>
             Sign Up
         </Button>
-        <Button mode="contained" onPress={() => {navigation.navigate('Dash')}  }>
+        <Button mode="outlined" onPress={() => navigation.navigate('AvatarScreen')}>
+            Avatar
+        </Button>
+        <Button mode="outlined" onPress={() => navigation.navigate('ActivityScreen')}>
+            Activity
+        </Button>
+        <Button mode="outlined" onPress={() => navigation.navigate('Graphs')}>
+            Graphs
+        </Button>
+        <Button mode="contained" onPress={() => {
+            navigation.navigate('Dash')
+        }}>
             Like Successful login.
         </Button>
 
