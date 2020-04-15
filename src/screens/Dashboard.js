@@ -17,7 +17,7 @@ const Dashboard = ({navigation}) => (
             Logout
         </Button>
         <Button mode="contained" onPress={() => navigation.navigate('TestScreen')}>
-            Test
+            Testt
         </Button>
     </Background>
 );
