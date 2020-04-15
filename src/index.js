@@ -86,7 +86,6 @@ const Router2 = createMaterialBottomTabNavigator(
 
     }
 );
-
 const styles = StyleSheet.create({
     tabBarIconImage: {
         width: 30,
