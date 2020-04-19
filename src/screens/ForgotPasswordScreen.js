@@ -17,6 +17,7 @@ const ForgotPasswordScreen = ({ navigation }) => {
 
     if (emailError) {
       setEmail({ ...email, error: emailError });
+      //console.log(email);
       return;
     }
 

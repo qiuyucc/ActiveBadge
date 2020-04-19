@@ -22,9 +22,9 @@ const mapDispatchToProps = dispatch => ({
     fetchDishes: () => dispatch(fetchDishes()),
 })
 
-const TestScreen = ({navigation}) => (
+const TestScreen1 = (props) => (
     <Background>
-        {/*<BackButton goBack={() => navigation.navigate('HomeScreen')} />*/}
+        <BackButton goBack={() => props.navigation.navigate('HomeScreen')}/>
         <Logo/>
         <Header>This is test page/ After Login page dash.</Header>
         <Paragraph>
@@ -36,35 +36,24 @@ const TestScreen = ({navigation}) => (
     </Background>
 );
 
-class TestScr1 extends Component {
+class TestScreen extends Component {
     componentDidMount() {
-        this.props.fetchDishes();
+       this.props.fetchDishes();
+    }
+
+    constructor(props) {
+        super(props);
+
     }
 
     render() {
-        const renderMenuItem = ({item, index}) => {
-            return (
-                <Tile
-                    key={index}
-                    title={item.name}
-                    caption={item.description}
-                    featured
-                    //onPress={() => navigate('Dishdetail', {dishId: item.id})}
-                    imageSrc={{uri: baseUrl + item.image}}
-                />
-            );
-        }
 
         return (
-            //<TestScreen/>
-            <FlatList
-                data={this.props.dishes.dishes}
-                renderItem={renderMenuItem}
-                keyExtractor={item => item.id.toString()}
-            />
+            <TestScreen1 navigation={this.props.navigation}/>
         );
     }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(TestScr1);
+//export default connect(mapStateToProps, mapDispatchToProps)(TestScreen);
+export default memo(connect(mapStateToProps, mapDispatchToProps)(TestScreen));
 //export default memo(TestScreen);
