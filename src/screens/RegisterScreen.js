@@ -1,107 +1,139 @@
-import React, { memo, useState } from 'react';
-import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
+import React, {Component} from 'react';
+import {View, Text, StyleSheet, TouchableOpacity} from 'react-native';
 import Background from '../components/Background';
 import Logo from '../components/Logo';
 import Header from '../components/Header';
 import Button from '../components/Button';
-import TextInput from '../components/TextInput';
-import BackButton from '../components/BackButton';
-import { theme } from '../core/theme';
-import {
-  emailValidator,
-  passwordValidator,
-  nameValidator,
-} from '../core/utils';
+import InputText from '../components/InputText';
+import {theme} from '../core/theme';
+import {Actions} from 'react-native-router-flux';
+import {reduxForm,Field} from 'redux-form';
+import {connect} from "react-redux";
+import {compose} from "redux";
+import Loader from '../components/loader';
+import {ErrorUtils} from "../core/auth.utils";
+import {createNewUser} from "../actions/auth.actions";
+import {emailValidator, passwordValidator,nameValidator} from '../core/utils';
 
-const RegisterScreen = ({ navigation }) => {
-  const [name, setName] = useState({ value: '', error: '' });
-  const [email, setEmail] = useState({ value: '', error: '' });
-  const [password, setPassword] = useState({ value: '', error: '' });
 
-  const _onSignUpPressed = () => {
-    const nameError = nameValidator(name.value);
-    const emailError = emailValidator(email.value);
-    const passwordError = passwordValidator(password.value);
+class RegisterScreen extends Component {
 
-    if (emailError || passwordError || nameError) {
-      setName({ ...name, error: nameError });
-      setEmail({ ...email, error: emailError });
-      setPassword({ ...password, error: passwordError });
-      return;
+
+    createNewUser = async (values) => {
+        try {
+            const response =  await this.props.dispatch(createNewUser(values));
+            if (!response.success) {
+                throw response;
+            }
+        } catch (error) {
+            const newError = new ErrorUtils(error, "register error");
+            newError.showAlert();
+        }
     }
 
-    navigation.navigate('Dashboard');
-  };
+onSubmit =(values) =>{
+    this.createNewUser(values);
+}
 
-  return (
-    <Background>
-      <BackButton goBack={() => navigation.navigate('HomeScreen')} />
+    renderTextInput = (field) => {
+        const {meta: {touched, error}, label, secureTextEntry, maxLength, keyboardType, placeholder, input: {onChange, ...restInput}} = field;
+        return (
+            <View>
+                <InputText
+                    onChangeText={onChange}
+                    maxLength={maxLength}
+                    placeholder={placeholder}
+                    keyboardType={keyboardType}
+                    secureTextEntry={secureTextEntry}
+                    label={label}
+                    {...restInput} />
+                {(touched && error) && <Text style={styles.errorText}>{error}</Text>}
+            </View>
+        );
+    }
 
-      <Logo />
+render()
+{
+    const { handleSubmit, createNewUser} = this.props;
+    return (
 
-      <Header>Create Account</Header>
+        <Background>
+            {(createNewUser&&createNewUser.isLoading) && <Loader />}
+            <Logo/>
+            <Header>Create Account</Header>
+            <Field name="username"
+                   placeholder="username"
+                   component={this.renderTextInput} />
+           <Field name="email"
+                  placeholder="Email"
+                  component={this.renderTextInput}/>
+            <Field name="password"
+                   placeholder="Password"
+                   secureTextEntry={true}
+                   component={this.renderTextInput}/>
 
-      <TextInput
-        label="Name"
-        returnKeyType="next"
-        value={name.value}
-        onChangeText={text => setName({ value: text, error: '' })}
-        error={!!name.error}
-        errorText={name.error}
-      />
+            <Button mode="contained" onPress={handleSubmit(this.onSubmit)} style={styles.button}>
+                Sign Up
+            </Button>
 
-      <TextInput
-        label="Email"
-        returnKeyType="next"
-        value={email.value}
-        onChangeText={text => setEmail({ value: text, error: '' })}
-        error={!!email.error}
-        errorText={email.error}
-        autoCapitalize="none"
-        autoCompleteType="email"
-        textContentType="emailAddress"
-        keyboardType="email-address"
-      />
+            <View style={styles.row}>
+                <Text style={styles.label}>Already have an account? </Text>
+                <TouchableOpacity onPress={this.loginView}>
+                    <Text style={styles.link}>Login</Text>
+                </TouchableOpacity>
+            </View>
+        </Background>
+    );
+}
 
-      <TextInput
-        label="Password"
-        returnKeyType="done"
-        value={password.value}
-        onChangeText={text => setPassword({ value: text, error: '' })}
-        error={!!password.error}
-        errorText={password.error}
-        secureTextEntry
-      />
+    loginView(){
+        Actions.login();
+    }
+}
 
-      <Button mode="contained" onPress={_onSignUpPressed} style={styles.button}>
-        Sign Up
-      </Button>
+const validate = (values) => {
+    const errors = {};
+    errors.email =emailValidator(values.email);
+    errors.username = nameValidator(values.username);
+    errors.password =passwordValidator(values.password);
 
-      <View style={styles.row}>
-        <Text style={styles.label}>Already have an account? </Text>
-        <TouchableOpacity onPress={() => navigation.navigate('LoginScreen')}>
-          <Text style={styles.link}>Login</Text>
-        </TouchableOpacity>
-      </View>
-    </Background>
-  );
+    return errors;
 };
 
-const styles = StyleSheet.create({
-  label: {
-    color: theme.colors.secondary,
-  },
-  button: {
-    marginTop: 24,
-  },
-  row: {
-    flexDirection: 'row',
-    marginTop: 4,
-  },
-  link: {
-    fontWeight: 'bold',
-    color: theme.colors.primary,
-  },
+const mapStateToProps = (state) => ({
+    createUser: state.authReducer.createUser
+})
+
+const mapDispatchToProps = (dispatch) => ({
+    dispatch
 });
 
-export default memo(RegisterScreen);
+const styles = StyleSheet.create({
+    label: {
+        color: theme.colors.secondary,
+    },
+    button: {
+        marginTop: 24,
+    },
+    row: {
+        flexDirection: 'row',
+        marginTop: 4,
+    },
+    link: {
+        fontWeight: 'bold',
+        color: theme.colors.primary,
+    },errorText: {
+        fontSize: 14,
+        color: theme.colors.error,
+        paddingHorizontal: 4,
+        paddingTop: 4,
+    }
+});
+
+export default compose(
+    connect(mapStateToProps, mapDispatchToProps),
+    reduxForm({
+        form: "register",
+        validate
+    })
+)(RegisterScreen);
