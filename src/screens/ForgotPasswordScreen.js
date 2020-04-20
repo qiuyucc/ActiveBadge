@@ -11,8 +11,6 @@ import Button from '../components/Button';
 
 
 
-
-
 const ForgotPasswordScreen = ({ navigation }) => {
   const [email, setEmail] = useState({ value: '', error: '' });
 
