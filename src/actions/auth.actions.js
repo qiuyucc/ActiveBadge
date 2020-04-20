@@ -8,7 +8,7 @@ export const createNewUser = (payload) => {
                 type: "CREATE_USER_LOADING"
             });
             //user/create
-            const response = await fetchApi("users", "POST", payload, 200);
+            const response = await fetchApi("user/create", "POST", payload, 200);
 
             if(response.success) {
                 dispatch({
@@ -46,7 +46,7 @@ export const loginUser = (payload) => {
                 type: "LOGIN_USER_LOADING"
             });
             //user/login
-            const response = await fetchApi("users", "POST", payload, 200);
+            const response = await fetchApi("user/login", "POST", payload, 200);
 
             if(response.success) {
                 dispatch({
@@ -81,7 +81,7 @@ export const logoutUser = () => {
         try {
             const {authReducer: {authData: {token}}} = state;
             console.log(token);
-            const response = await fetchApi("/user/logout", "DELETE", null, 200, token);
+            const response = await fetchApi("user/logout", "DELETE", null, 200, token);
             console.log(response);
             dispatch({
                 type: "USER_LOGGED_OUT_SUCCESS"
