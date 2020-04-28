@@ -18,35 +18,35 @@ const ActivityScreen = ({ navigation }) => {
                 <ScrollView style={styles.scroll}>
                     <View style={styles.avatarBox}>
                         <TouchableOpacity onPress={() => state.activityValue = 'tennis'} >
-                            <Image style={styles.image} source={require('../assets/Activity1.png')} />
+                            <Image style={styles.image} source={require('../images/Activity1.png')} />
                         </TouchableOpacity>
                         <TouchableOpacity onPress={() => state.activityValue = 'soccer'} >
-                            <Image style={styles.image} source={require('../assets/Activity2.png')} />
+                            <Image style={styles.image} source={require('../images/Activity2.png')} />
                         </TouchableOpacity>
                         <TouchableOpacity onPress={() => state.activityValue = 'bowling'} >
-                            <Image style={styles.image} source={require('../assets/Activity3.png')} />
+                            <Image style={styles.image} source={require('../images/Activity3.png')} />
                         </TouchableOpacity>
                     </View>
                     <View style={styles.avatarBox}>
                         <TouchableOpacity onPress={() => state.activityValue = 'football'} >
-                            <Image style={styles.image} source={require('../assets/Activity4.png')} />
+                            <Image style={styles.image} source={require('../images/Activity4.png')} />
                         </TouchableOpacity>
                         <TouchableOpacity onPress={() => state.activityValue = 'baseball'} >
-                            <Image style={styles.image} source={require('../assets/Activity5.png')} />
+                            <Image style={styles.image} source={require('../images/Activity5.png')} />
                         </TouchableOpacity>
                         <TouchableOpacity onPress={() => state.activityValue = 'billiards'} >
-                            <Image style={styles.image} source={require('../assets/Activity6.png')} />
+                            <Image style={styles.image} source={require('../images/Activity6.png')} />
                         </TouchableOpacity>
                     </View>
                     <View style={styles.avatarBox}>
                         <TouchableOpacity onPress={() => state.activityValue = 'basketball'} >
-                            <Image style={styles.image} source={require('../assets/Activity7.png')} />
+                            <Image style={styles.image} source={require('../images/Activity7.png')} />
                         </TouchableOpacity>
                         <TouchableOpacity onPress={() => state.activityValue = 'boxing'} >
-                            <Image style={styles.image} source={require('../assets/Activity8.png')} />
+                            <Image style={styles.image} source={require('../images/Activity8.png')} />
                         </TouchableOpacity>
                         <TouchableOpacity onPress={() => state.activityValue = 'pingpong'} >
-                            <Image style={styles.image} source={require('../assets/Activity9.png')} />
+                            <Image style={styles.image} source={require('../images/Activity9.png')} />
                         </TouchableOpacity>
                     </View>
                 </ScrollView>
@@ -88,6 +88,8 @@ const styles = StyleSheet.create({
         width: 100,
         height: 100,
         borderRadius: 50,
+        borderWidth:3,
+        borderColor:"#FFF"
     },
 
 });

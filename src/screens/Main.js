@@ -6,7 +6,6 @@ import {
     StatusBar ,
     TouchableOpacity
 } from 'react-native';
-import {Actions} from 'react-native-router-flux';
 import {connect} from "react-redux";
 
 import Routes from './Routers';

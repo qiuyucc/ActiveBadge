@@ -1,4 +1,5 @@
 import {fetchApi} from "../service/api";
+const baseUrl = "http://172.27.243.241:3333/";
 
 export const createNewUser = (payload) => {
     return async (dispatch) => {
@@ -38,7 +39,53 @@ export const createNewUser = (payload) => {
     }
 }
 
+export const changeAvatar = (image) => {
+    return async (dispatch, getState) => {
+        const state = getState();
+    const newAvatar={
+        image:image
+    };
+
+        try {
+            const {authReducer: {authData: {token}}} = state;
+            dispatch({
+                type: "UPDATE_USER_LOADING"
+            });
+            //user/create
+            const response = await fetchApi("user/avatar", "POST", newAvatar, 200,token);
+
+            if(response.success) {
+                dispatch({
+                    type: "UPDATE_USER_SUCCESS"
+                });
+                dispatch({
+                    type: "AUTH_USER_SUCCESS",
+                    token: response.token
+                });
+                dispatch({
+                    type: "GET_USER_SUCCESS",
+                    payload: response.responseBody
+                });
+
+                return response;
+            } else {
+                throw response;
+            }
+
+        } catch (error) {
+            dispatch({
+                type: "UPDATE_USER_FAIL",
+                payload: error.responseBody
+            });
+            return error;
+        }
+    }
+}
+
 export const loginUser = (payload) => {
+
+    console.log(payload); console.log(payload); console.log(payload); console.log(payload); console.log(payload); console.log(payload);
+
     return async (dispatch) => {
 
         try {
