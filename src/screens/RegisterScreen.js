@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {View, Text, StyleSheet, TouchableOpacity} from 'react-native';
+import {View, Text, StyleSheet, TouchableOpacity,TextInput} from 'react-native';
 import Background from '../components/Background';
 import Logo from '../components/Logo';
 import Header from '../components/Header';
@@ -134,6 +134,7 @@ export default compose(
     connect(mapStateToProps, mapDispatchToProps),
     reduxForm({
         form: "register",
+        fields:['username','email','password','point','image','suburb','age','state'],
         validate
     })
 )(RegisterScreen);

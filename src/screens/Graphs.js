@@ -23,21 +23,21 @@ import BarScreen from "./BarScreen";
                 <View style={styles.avatarBox}>
 
                     <TouchableOpacity onPress={() => {this.props.navigation.navigate("LineScreen")}} >
-                        <Image style={styles.image} source={require('../assets/Activity1.png')} />
+                        <Image style={styles.image} source={require('../images/Activity1.png')} />
                     </TouchableOpacity>
 
                 </View>
                 <View style={styles.avatarBox}>
 
                     <TouchableOpacity onPress={() => {this.props.navigation.navigate("BarScreen")}} >
-                        <Image style={styles.image} source={require('../assets/Activity1.png')} />
+                        <Image style={styles.image} source={require('../images/Activity1.png')} />
                     </TouchableOpacity>
 
                 </View>
                 <View style={styles.avatarBox}>
 
                     <TouchableOpacity onPress={() => {this.props.navigation.navigate("PieScreen")}} >
-                        <Image style={styles.image} source={require('../assets/Activity1.png')} />
+                        <Image style={styles.image} source={require('../images/Activity1.png')} />
                     </TouchableOpacity>
 
                 </View>
