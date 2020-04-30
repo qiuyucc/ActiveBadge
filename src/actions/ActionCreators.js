@@ -18,7 +18,7 @@ export const fetchAvatar = () => (dispatch) => {
                 throw errMess;
             })
         .then(response => response.json())
-        .then(avatarDetails => dispatch(addAvatar(avatarDetails)))
+        .then(avatars => dispatch(addAvatar(avatars)))
         .catch(error => dispatch(avatarFailed(error.message)))
 };
 
@@ -31,8 +31,7 @@ export const avatarFailed = (errMess) => ({
     payload: errMess
 });
 
-export const addAvatar = (avatarDetails) => ({
+export const addAvatar = (avatars) => ({
     type: "ADD_AVATAR",
-    payload: avatarDetails
+    payload: avatars
 });
-
