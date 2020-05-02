@@ -24,7 +24,7 @@ import Profile from "./ProfileScreen";
 import Report from "./ReportScreen";
 import Vegie from "./VegieScreen";
 
-import {fetchAvatar} from "../actions/ActionCreators";
+import {fetchAvatar, fetchVegie, fetchActivity} from "../actions/ActionCreators";
 
 class Dashboard extends Component<>{
 
@@ -33,10 +33,13 @@ class Dashboard extends Component<>{
     }
     componentDidMount() {
         this.props.fetchAvatar();
+        this.props.fetchVegie();
+        this.props.fetchActivity();
     }
 
     render(){
         const {getUser: {userDetails}} = this.props;
+
         const imagePath=userDetails ? userDetails.image : ""
         const CustomDrawerContentComponent =(props) =>(
 
@@ -130,7 +133,9 @@ const mapStateToProps=(state)=>({
 });
 
 const mapDispatchToProps = (dispatch) =>({
-    fetchAvatar: () => dispatch(fetchAvatar())
+    fetchAvatar: () => dispatch(fetchAvatar()),
+    fetchVegie:()=>dispatch(fetchVegie()),
+    fetchActivity:()=>dispatch(fetchActivity())
 });
 const styles = StyleSheet.create({
     container: {

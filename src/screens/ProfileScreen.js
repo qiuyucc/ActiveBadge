@@ -100,13 +100,14 @@ class ProfileScreen extends Component {
         super(props);
 
         this.state = {
-            age: 12,
-            gender: "",
-            suburb: "",
-            state: "Victoria",
+            age: 6,
+            gender: "Female",
+            suburb:"",
+            states: "Victoria",
             createProfileModal: false
         }
     }
+
 
     toggleCreateProfileModal() {
         this.setState({createProfileModal: !this.state.createProfileModal});
@@ -114,7 +115,7 @@ class ProfileScreen extends Component {
 
     resetForm() {
         this.setState({
-            age: 12,
+            age: 6,
             gender: "Female",
             suburb: "",
             states: "Victoria"
@@ -122,6 +123,8 @@ class ProfileScreen extends Component {
     }
 
     onSubmit(){
+
+
         const age= this.state.age;
         const gender = this.state.gender;
         const states = this.state.states;
@@ -143,8 +146,8 @@ class ProfileScreen extends Component {
     }
 
     render() {
-        const {getUser: {userDetails}} = this.props;
 
+        const {getUser: {userDetails}} = this.props;
         if (userDetails.age === 0) {
             return (
                 <Background>
@@ -223,6 +226,7 @@ class ProfileScreen extends Component {
         } else {
             return (
                 <View style={styles.centeredView}>
+                    <BackButton goBack={() => this.props.navigation.navigate('Home')}/>
                     <Header>
                         Hi, How are you badger?
                     </Header>
@@ -305,6 +309,7 @@ class ProfileScreen extends Component {
                                 <View style={styles.formRow}>
                                     <Text style={styles.profileText}>Suburb</Text>
                                     <TextInput style={styles.formItemInput} value={this.state.suburb}
+                                               defaultValue={userDetails ? userDetails.suburb : ""}
                                                onChangeText={(value) => this.setState({suburb: value})}/>
                                 </View>
                                 <Button mode="contained" style={styles.button}

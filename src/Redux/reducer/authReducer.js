@@ -51,38 +51,7 @@ const createUser = (state = {}, action) => {
     }
 }
 
-const updateUser = (state = {}, action) => {
-    switch (action.type) {
 
-        case "UPDATE_USER_LOADING":
-            return {
-                isLoading: true,
-                isError: false,
-                isSuccess: false,
-                errors: null,
-
-            }
-
-        case "UPDATE_USER_SUCCESS":
-            return {
-                isLoading: false,
-                isError: false,
-                isSuccess: true,
-                errors: null
-            }
-
-        case "UPDATE_USER_FAIL":
-            return {
-                isLoading: false,
-                isError: true,
-                isSuccess: false,
-                errors: action.payload
-            }
-
-        default:
-            return state;
-    }
-}
 
 const loginUser = (state = {}, action) => {
     switch (action.type) {
@@ -121,6 +90,5 @@ const loginUser = (state = {}, action) => {
 export default combineReducers({
     createUser,
     loginUser,
-    authData,
-    updateUser
+    authData
 });
