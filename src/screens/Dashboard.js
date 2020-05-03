@@ -24,7 +24,7 @@ import Profile from "./ProfileScreen";
 import Report from "./ReportScreen";
 import Vegie from "./VegieScreen";
 
-import {fetchAvatar, fetchVegie, fetchActivity} from "../actions/ActionCreators";
+import {fetchAvatar, fetchVegie, fetchActivity,fetchActivityRecord} from "../actions/ActionCreators";
 
 class Dashboard extends Component<>{
 
@@ -35,6 +35,7 @@ class Dashboard extends Component<>{
         this.props.fetchAvatar();
         this.props.fetchVegie();
         this.props.fetchActivity();
+        //this.props.fetchActivityRecord();
     }
 
     render(){
@@ -53,7 +54,7 @@ class Dashboard extends Component<>{
                         </TouchableOpacity>
                         <Text style={styles.name}>Hello {userDetails ? userDetails.username : ""}</Text>
                         <View style={{flexDirection:"row"}}>
-                            <Text style={styles.points}> {userDetails?userDetails.point: ""} Points</Text>
+                            <Text style={styles.points}> {userDetails.point} Points</Text>
                             <Ionicons name="md-star" size={16} color="rgba(255,255,255,0.8)"/>
                         </View>
                     </ImageBackground>
@@ -135,7 +136,8 @@ const mapStateToProps=(state)=>({
 const mapDispatchToProps = (dispatch) =>({
     fetchAvatar: () => dispatch(fetchAvatar()),
     fetchVegie:()=>dispatch(fetchVegie()),
-    fetchActivity:()=>dispatch(fetchActivity())
+    fetchActivity:()=>dispatch(fetchActivity()),
+  //  fetchActivityRecord:()=>dispatch(fetchActivityRecord())
 });
 const styles = StyleSheet.create({
     container: {
