@@ -17,7 +17,7 @@ const mapStateToProps = state => {
     }
 }
 const mapDispatchToProps = dispatch=>({
-    dispatch
+  dispatch
 })
 
 class AvatarScreen extends Component {

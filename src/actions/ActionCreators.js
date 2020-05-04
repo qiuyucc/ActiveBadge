@@ -74,7 +74,7 @@ export const addActivity = (activities) => ({
 
 export const fetchActivityRecord = () => (dispatch) => {
     dispatch(activityRecordLoading());
-    return fetch(baseUrl + 'activityrecord/fetch')
+    return fetch(baseUrl + 'activityrecord/record')
         .then(response => {
                 if (response.ok) {
                     return response;
@@ -136,7 +136,7 @@ export const postActivityRecord =(email, name, description, mins, date) =>(dispa
             throw error;
         })
         .then(response => response.json())
-        .then(response => setTimeout(() => {dispatch(addActivityRecord(response))}, 2000))
+        .then(response => dispatch(fetchActivityRecord(response)))
         .catch(error => { console.log('post activity record', error.message);
         alert('Your record cannot be posted\nError: ' + error.message); });
 };
@@ -183,7 +183,7 @@ export const addVegie = (vegies) => ({
 
 export const fetchVegieRecord = () => (dispatch) => {
     dispatch(vegieRecordLoading());
-    return fetch(baseUrl + 'vegieRecord/fetch')
+    return fetch(baseUrl + 'vegierecord/record')
         .then(response => {
                 if (response.ok) {
                     return response;
@@ -245,7 +245,7 @@ export const postVegieRecord =(email, name, description, date,count) =>(dispatch
             throw error;
         })
         .then(response => response.json())
-        .then(response => setTimeout(() => {dispatch(addVegieRecord(response))}, 2000))
+        .then(response => dispatch(fetchVegieRecord(response)))
         .catch(error => { console.log('post vegie record', error.message);
             alert('Your record cannot be posted\nError: ' + error.message); });
 };
