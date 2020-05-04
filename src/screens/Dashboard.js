@@ -9,7 +9,7 @@ import {
     SafeAreaView,
     TouchableOpacity,
     Dimensions,
-    ImageBackground, Modal
+    ImageBackground, Alert
 } from 'react-native';
 import {createAppContainer} from 'react-navigation';
 import { createDrawerNavigator,DrawerItems } from 'react-navigation-drawer';
@@ -23,25 +23,26 @@ import Avatar from "./AvatarScreen";
 import Profile from "./ProfileScreen";
 import Report from "./ReportScreen";
 import Vegie from "./VegieScreen";
+import Daily from "./DailyScreen2";
 
-import {fetchAvatar, fetchVegie, fetchActivity,fetchActivityRecord} from "../actions/ActionCreators";
+import {fetchAvatar, fetchVegie, fetchActivity,fetchActivityRecord,fetchVegieRecord} from "../actions/ActionCreators";
+
+
 
 class Dashboard extends Component<>{
 
-    constructor(props){
-        super(props)
-    }
+
     componentDidMount() {
         this.props.fetchAvatar();
         this.props.fetchVegie();
         this.props.fetchActivity();
-        //this.props.fetchActivityRecord();
+        this.props.fetchActivityRecord();
+        this.props.fetchVegieRecord();
     }
 
     render(){
         const {getUser: {userDetails}} = this.props;
-
-        const imagePath=userDetails ? userDetails.image : ""
+        const imagePath=userDetails ? userDetails.image : "";
         const CustomDrawerContentComponent =(props) =>(
 
             <SafeAreaView style={{flex:1}}>
@@ -54,7 +55,7 @@ class Dashboard extends Component<>{
                         </TouchableOpacity>
                         <Text style={styles.name}>Hello {userDetails ? userDetails.username : ""}</Text>
                         <View style={{flexDirection:"row"}}>
-                            <Text style={styles.points}> {userDetails.point} Points</Text>
+                            <Text style={styles.points}> {userDetails? userDetails.point : ""} Points</Text>
                             <Ionicons name="md-star" size={16} color="rgba(255,255,255,0.8)"/>
                         </View>
                     </ImageBackground>
@@ -88,6 +89,11 @@ class Dashboard extends Component<>{
                 navigationOptions:{
                     title:"Vegie",
                     drawerIcon:({tintColor}) =><Feather name="feather" size={16} color={tintColor}/>
+                }},
+            Daily:{screen:Daily,
+                navigationOptions:{
+                    title:"Daily",
+                    drawerIcon:({tintColor}) =><Feather name="sun" size={16} color={tintColor}/>
                 }},
             Report:{screen:Report,
                 navigationOptions:{
@@ -137,7 +143,8 @@ const mapDispatchToProps = (dispatch) =>({
     fetchAvatar: () => dispatch(fetchAvatar()),
     fetchVegie:()=>dispatch(fetchVegie()),
     fetchActivity:()=>dispatch(fetchActivity()),
-  //  fetchActivityRecord:()=>dispatch(fetchActivityRecord())
+    fetchActivityRecord:()=>dispatch(fetchActivityRecord()),
+    fetchVegieRecord:()=>dispatch(fetchVegieRecord())
 });
 const styles = StyleSheet.create({
     container: {
