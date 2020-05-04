@@ -1,42 +1,124 @@
-import React, {memo} from 'react';
-import Background from '../components/Background';
-import Logo from '../components/Logo';
-import Header from '../components/Header';
-import Button from '../components/Button';
-import Paragraph from '../components/Paragraph';
+import {SafeAreaView, StyleSheet, Text, TouchableOpacity, View, FlatList, Image} from "react-native";
+import {FontAwesome5} from "@expo/vector-icons";
+import Button from "../components/Button";
+import React, {Component} from "react";
+import Header from "../components/Header";
+import {baseUrl} from "../Redux/imageUrl";
+import {ListItem} from "react-native-elements";
+import Loader from "../components/loader";
+import {connect} from "react-redux";
+import VegieScreen from "./VegieScreen";
 
-const HomeScreen = ({navigation}) => (
-    <Background>
-        <Logo/>
-        <Header>Active Badger</Header>
 
-        <Paragraph>
-            Tackling childhood obesity
-        </Paragraph>
-        <Button mode="contained" onPress={() => navigation.navigate('LoginScreen')}>
-            Login
-        </Button>
-        <Button
-            mode="outlined"
-            onPress={() => navigation.navigate('RegisterScreen')}>
-            Sign Up
-        </Button>
-        <Button mode="outlined" onPress={() => navigation.navigate('AvatarScreen')}>
-            Avatar
-        </Button>
-        <Button mode="outlined" onPress={() => navigation.navigate('ActivityScreen')}>
-            Activity
-        </Button>
-        <Button mode="outlined" onPress={() => navigation.navigate('Graphs')}>
-            Graphs
-        </Button>
-        <Button mode="contained" onPress={() => {
-            navigation.navigate('Dash')
-        }}>
-            Like Successful login.
-        </Button>
 
-    </Background>
-);
+const mapStateToProps = state => {
+    return {
+        users: state.userReducer.getUser,
+        // activityRecord: state.activityReducer.getActivityRecord,
+        // vegieRecord: state.vegieReducer.getVegieRecord
+    }
+}
 
-export default memo(HomeScreen);
+const mapDispatchToProps = (dispatch) =>({
+    dispatch
+});
+
+class HomeScreen extends Component {
+    render() {
+        const {users: {userDetails}} = this.props;
+        const email = userDetails? userDetails.email:"";
+        const now = new Date();
+        const date = now.getDate() + "-" + (now.getMonth() + 1) + "-" + now.getFullYear();
+
+        const renderActivityItem = ({item, index}) => {
+            return (
+                <ListItem
+                    key={index}
+                    title={item.description}
+                    subtitle={item.mins + " mins"}
+                    hideChevron={true}
+                    leftAvatar={{source: {uri: baseUrl + item.name}}}
+                ></ListItem>
+            );
+        }
+
+        const renderVegieItem = ({item, index}) => {
+            return (
+                <ListItem
+                    key={index}
+                    title={item.description}
+                    subtitle={item.count + " Box / Each"}
+                    hideChevron={true}
+                    leftAvatar={{source: {uri: baseUrl + item.name}}}
+                ></ListItem>
+            );
+        }
+
+        // if (this.props.activityRecord.isLoading && this.props.vegieRecord.isLoading) {
+        //     return (
+        //         <Loader/>
+        //     );
+        // } else if (this.props.activityRecord.errors && this.props.vegieRecord.errors) {
+        //     return (
+        //         <View>
+        //             <Text>{props.activityRecord.errors}</Text>
+        //             <Text>{props.vegieRecord.errors}</Text>
+        //         </View>
+        //     );
+        // } else {
+            return (
+            <View style={styles.container}>
+                <SafeAreaView style={{flex: 1}}>
+                    <TouchableOpacity
+                        style={{alignItems: "flex-start", margin: 16}}
+                        onPress={this.props.navigation.openDrawer}>
+                        <FontAwesome5 name="bars" size={24} color="#161924"/>
+                    </TouchableOpacity>
+                    {/*<View styles={{flex: 1,padding:20}}>*/}
+                    {/*    <FlatList data={this.props.activityRecord.activityRecordDetails.filter(record=>record.date===date && record.email===email)}*/}
+                    {/*              renderItem={renderActivityItem}*/}
+                    {/*              keyExtractor={(record,index)=>index.toString()}/>*/}
+                    {/*</View>*/}
+                    {/*<Text>{"\n"}</Text>*/}
+                    {/*<View styles={{flex: 1,padding:20}}>*/}
+                    {/*    <FlatList data={this.props.vegieRecord.vegieRecordDetails.filter(record=>record.date===date && record.email===email)}*/}
+                    {/*              renderItem={renderVegieItem}*/}
+                    {/*              keyExtractor={(record,index)=>index.toString()}/>*/}
+                    {/*</View>*/}
+                </SafeAreaView>
+            </View>
+            );
+
+        }
+  //  }
+}
+
+const styles = StyleSheet.create({
+    container: {
+        flex: 1,
+    },
+    drawerHeader: {
+        backgroundColor: '#512DA8',
+        height: 140,
+        alignItems: 'center',
+        justifyContent: 'center',
+        flex: 1,
+        flexDirection: 'row'
+    },
+    drawerHeaderText: {
+        color: 'white',
+        fontSize: 24,
+        fontWeight: 'bold'
+    },
+    drawerImage: {
+        margin: 10,
+        width: 80,
+        height: 60
+    },
+    backgroundImage:{
+        flex: 1,
+        resizeMode: 'cover', // or 'stretch'
+    }
+});
+
+export default connect(mapStateToProps,mapDispatchToProps)(HomeScreen);

@@ -1,17 +1,28 @@
-import React from 'react';
+import React, {Component} from 'react';
 import {Provider as PaperProvider} from 'react-native-paper';
-import {Provider as StoreProvider} from 'react-redux'
-import App from './src';
-import {theme} from './src/core/theme';
-import {ConfigureStore} from "./src/Redux/ConfigureStore";
+import {Provider as StoreProvider} from 'react-redux';
 
-const store = ConfigureStore();
-const Main = () => (
-    <StoreProvider store={store}>
+
+import {theme} from './src/core/theme';
+import { PersistGate } from 'redux-persist/es/integration/react';
+import persist from "./src/Redux/ConfigureStore";
+import Main from "./src/screens/Main"
+
+
+const persistStore = persist();
+
+export default class App extends Component {
+    render() {
+        return (
+    <StoreProvider store={persistStore.store}>
         <PaperProvider theme={theme}>
-            <App/>
+            <PersistGate loading={null}
+            persistor={persistStore.persistor}>
+            <Main/>
+            </PersistGate>
         </PaperProvider>
     </StoreProvider>
-);
+);}
+}
 
-export default Main;
+

@@ -45,47 +45,48 @@ const Router1 = createStackNavigator(
     }
 );
 //bottom navigator
-const Router2 = createMaterialBottomTabNavigator(
-    {
-        HomeScreen: {
-            screen: TestScreen, navigationOptions: {
-                tabBarIcon: ({tintColor}) => (
-                    <Image source={require('./assets/arrow_back.png')} style={styles.tabBarIconImage}
-                    />),
-                tabBarLabel: <Text style={{fontSize: 15}}>Home</Text>
-            }
-        },
-        Sport: {
-            screen: Router1, navigationOptions: {
-                tabBarIcon: ({tintColor}) => (
-                    <Image source={require('./assets/arrow_back.png')} style={styles.tabBarIconImage}
-                    />)
-            }
-        },
-        Fruit: {
-            screen: LoginScreen, navigationOptions: {
-                tabBarIcon: ({tintColor}) => (
-                    <Image source={require('./assets/arrow_back.png')} style={styles.tabBarIconImage}
-                    />)
-            }
-        },
-        Me: {
-            screen: Dashboard, navigationOptions: {
-                tabBarIcon: ({tintColor}) => (
-                    <Image source={require('./assets/arrow_back.png')} style={styles.tabBarIconImage}
-                    />)
-            }
-        },
+// const Router2 = createMaterialBottomTabNavigator(
+//     {
+//         HomeScreen: {
+//             screen: TestScreen, navigationOptions: {
+//                 tabBarIcon: ({tintColor}) => (
+//                     <Image source={require('./assets/arrow_back.png')} style={styles.tabBarIconImage}
+//                     />),
+//                 tabBarLabel: <Text style={{fontSize: 15}}>Home</Text>
+//             }
+//         },
+//         Sport: {
+//             screen: Router1, navigationOptions: {
+//                 tabBarIcon: ({tintColor}) => (
+//                     <Image source={require('./assets/arrow_back.png')} style={styles.tabBarIconImage}
+//                     />)
+//             }
+//         },
+//         Fruit: {
+//             screen: LoginScreen, navigationOptions: {
+//                 tabBarIcon: ({tintColor}) => (
+//                     <Image source={require('./assets/arrow_back.png')} style={styles.tabBarIconImage}
+//                     />)
+//             }
+//         },
+//         Me: {
+//             screen: Dashboard, navigationOptions: {
+//                 tabBarIcon: ({tintColor}) => (
+//                     <Image source={require('./assets/arrow_back.png')} style={styles.tabBarIconImage}
+//                     />)
+//             }
+//         },
+//
+//     }, {
+//         shifting: false,
+//         initialRouteName: 'Me',
+//         activeColor: '#f6d614',
+//         inactiveColor: '#f0edf6',
+//         barStyle: {backgroundColor: '#29a5a7',},
+//
+//     }
+// );
 
-    }, {
-        shifting: false,
-        initialRouteName: 'Me',
-        activeColor: '#f6d614',
-        inactiveColor: '#f0edf6',
-        barStyle: {backgroundColor: '#29a5a7',},
-
-    }
-);
 const styles = StyleSheet.create({
     tabBarIconImage: {
         width: 30,

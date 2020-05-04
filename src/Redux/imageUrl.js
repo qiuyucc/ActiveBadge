@@ -1,0 +1,1 @@
+export const baseUrl ='https://activebadge.s3-ap-southeast-2.amazonaws.com/'
