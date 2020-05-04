@@ -16,6 +16,9 @@ const mapStateToProps = state => {
         users: state.userReducer.getUser
     }
 }
+const mapDispatchToProps = dispatch=>({
+    dispatch
+})
 
 class AvatarScreen extends Component {
 
@@ -42,7 +45,7 @@ class AvatarScreen extends Component {
 
 
     onSubmit(values) {
-        this.setState({imagePath:values})
+        this.setState({imagePath:values});
        this.changeAvatar(values);
     }
 
@@ -121,7 +124,7 @@ const styles = StyleSheet.create({
 
 });
 
-export default connect(mapStateToProps)(AvatarScreen);
+export default connect(mapStateToProps,mapDispatchToProps)(AvatarScreen);
 
 
 

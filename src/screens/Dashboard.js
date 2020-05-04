@@ -20,7 +20,11 @@ import Activity from "./ActivityScreen";
 import Home from "./HomeScreen";
 import Signout from "./SignoutScreen";
 import Avatar from "./AvatarScreen";
-import {fetchAvatar} from "../actions/ActionCreators";
+import Profile from "./ProfileScreen";
+import Report from "./ReportScreen";
+import Vegie from "./VegieScreen";
+
+import {fetchAvatar, fetchVegie, fetchActivity,fetchActivityRecord} from "../actions/ActionCreators";
 
 class Dashboard extends Component<>{
 
@@ -29,10 +33,14 @@ class Dashboard extends Component<>{
     }
     componentDidMount() {
         this.props.fetchAvatar();
+        this.props.fetchVegie();
+        this.props.fetchActivity();
+        //this.props.fetchActivityRecord();
     }
 
     render(){
         const {getUser: {userDetails}} = this.props;
+
         const imagePath=userDetails ? userDetails.image : ""
         const CustomDrawerContentComponent =(props) =>(
 
@@ -46,7 +54,7 @@ class Dashboard extends Component<>{
                         </TouchableOpacity>
                         <Text style={styles.name}>Hello {userDetails ? userDetails.username : ""}</Text>
                         <View style={{flexDirection:"row"}}>
-                            <Text style={styles.points}> {userDetails?userDetails.point: ""} Points</Text>
+                            <Text style={styles.points}> {userDetails.point} Points</Text>
                             <Ionicons name="md-star" size={16} color="rgba(255,255,255,0.8)"/>
                         </View>
                     </ImageBackground>
@@ -65,10 +73,10 @@ class Dashboard extends Component<>{
                         title:"Home",
                         drawerIcon:({tintColor}) =><Feather name="home" size={16} color={tintColor}/>
                     }},
-            Avatar:
-                {screen:Avatar,
+            Profile:
+                {screen:Profile,
                     navigationOptions:{
-                        title:"Avatar",
+                        title:"Profile",
                         drawerIcon:({tintColor}) =><Feather name="user" size={16} color={tintColor}/>
                     }},
             Activity:{screen:Activity,
@@ -76,10 +84,24 @@ class Dashboard extends Component<>{
                     title:"Activity",
                     drawerIcon:({tintColor}) =><Feather name="activity" size={16} color={tintColor}/>
                 }},
+            Vegie:{screen:Vegie,
+                navigationOptions:{
+                    title:"Vegie",
+                    drawerIcon:({tintColor}) =><Feather name="feather" size={16} color={tintColor}/>
+                }},
+            Report:{screen:Report,
+                navigationOptions:{
+                    title:"Report",
+                    drawerIcon:({tintColor}) =><Feather name="bar-chart" size={16} color={tintColor}/>
+                }},
             Signout:{screen:Signout,
                 navigationOptions:{
                     title:"Log Out",
                     drawerIcon:({tintColor}) =><Feather name="log-out" size={16} color={tintColor}/>
+                }},
+            Avatar:{screen:Avatar,
+                navigationOptions:{
+                    drawerLabel: () => null
                 }},
 
         },{
@@ -99,11 +121,9 @@ class Dashboard extends Component<>{
             }
         })
 
-
         const NavigatorDrawer = createAppContainer(appDrawer);
         return(
            <NavigatorDrawer/>
-
         );
     }
 }
@@ -114,7 +134,10 @@ const mapStateToProps=(state)=>({
 });
 
 const mapDispatchToProps = (dispatch) =>({
-    fetchAvatar: () => dispatch(fetchAvatar())
+    fetchAvatar: () => dispatch(fetchAvatar()),
+    fetchVegie:()=>dispatch(fetchVegie()),
+    fetchActivity:()=>dispatch(fetchActivity()),
+  //  fetchActivityRecord:()=>dispatch(fetchActivityRecord())
 });
 const styles = StyleSheet.create({
     container: {

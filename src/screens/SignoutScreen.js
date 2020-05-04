@@ -24,9 +24,10 @@ const styles = StyleSheet.create({
     link: {
         fontWeight: 'bold',
         color: theme.colors.primary,
-    },errorText: {
-        fontSize: 14,
-        color: theme.colors.error,
+    },
+    textStyle: {
+        fontSize: 16,
+        color: theme.colors.secondary,
         paddingHorizontal: 4,
         paddingTop: 4,
     }

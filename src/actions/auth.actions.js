@@ -56,12 +56,41 @@ export const changeAvatar = (image) => {
 
             if(response.success) {
                 dispatch({
-                    type: "UPDATE_USER_SUCCESS"
+                    type: "GET_USER_SUCCESS",
+                    payload: response.responseBody
                 });
-                dispatch({
-                    type: "AUTH_USER_SUCCESS",
-                    token: response.token
-                });
+
+                return response;
+            } else {
+                throw response;
+            }
+
+        } catch (error) {
+            dispatch({
+                type: "UPDATE_USER_FAIL",
+                payload: error.responseBody
+            });
+            return error;
+        }
+    }
+}
+
+export const updatePoint = (point) => {
+    return async (dispatch, getState) => {
+        const state = getState();
+        const newPiont={
+            point:point
+        };
+
+        try {
+            const {authReducer: {authData: {token}}} = state;
+            dispatch({
+                type: "UPDATE_USER_LOADING"
+            });
+            //user/create
+            const response = await fetchApi("user/point", "POST", newPiont, 200,token);
+
+            if(response.success) {
                 dispatch({
                     type: "GET_USER_SUCCESS",
                     payload: response.responseBody
@@ -82,9 +111,45 @@ export const changeAvatar = (image) => {
     }
 }
 
-export const loginUser = (payload) => {
+export const updateProfile = (age, gender,states,suburb) => {
+    return async (dispatch, getState) => {
+        const state = getState();
+        const userProfile={
+            age:age,
+            gender:gender,
+            state:states,
+            suburb:suburb
+        };
 
-    console.log(payload); console.log(payload); console.log(payload); console.log(payload); console.log(payload); console.log(payload);
+        try {
+            const {authReducer: {authData: {token}}} = state;
+            dispatch({
+                type: "UPDATE_USER_LOADING"
+            });
+            //user/create
+            const response = await fetchApi("user/profile", "POST", userProfile, 200,token);
+
+            if(response.success) {
+                dispatch({
+                    type: "GET_USER_SUCCESS",
+                    payload: response.responseBody
+                });
+                return response;
+            } else {
+                throw response;
+            }
+
+        } catch (error) {
+            dispatch({
+                type: "UPDATE_USER_FAIL",
+                payload: error.responseBody
+            });
+            return error;
+        }
+    }
+}
+
+export const loginUser = (payload) => {
 
     return async (dispatch) => {
 
