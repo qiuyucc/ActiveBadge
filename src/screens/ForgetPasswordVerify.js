@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import React, {Component, memo, useState} from 'react';
 import {Text, StyleSheet, TouchableOpacity, View, Alert} from 'react-native';
 import {emailValidator} from '../core/utils';
 import Background from '../components/Background';
@@ -10,7 +10,7 @@ import {theme} from '../core/theme';
 import Button from '../components/Button';
 import {connect} from "react-redux";
 import {Actions} from "react-native-router-flux";
-import {forgetUser} from "../actions/userPwd.action";
+import {forgetVerify, forgetCreateCode} from "../actions/userPwd.action";
 import {Field, reduxForm} from "redux-form";
 import {compose} from "redux";
 import Loader from "../components/loader";
@@ -20,43 +20,78 @@ import {ErrorUtils} from "../core/auth.utils";
 
 const validate = (values) => {
     const errors = {};
-    errors.email = emailValidator(values.email);
+    errors.code = emailValidator(values.code);
     return errors;
 };
 const mapStateToProps = (state) => ({
-    forgetUser: state.userPwdReducer.forgetUser
+    forgetCreateCode: state.userPwdReducer.forgetCreateCode,
+    forgetVerify: state.userPwdReducer.forgetVerify
 })
 const mapDispatchToProps = (dispatch) => ({
     dispatch
 });
 
-class ForgotPasswordScreen extends Component {
+class ForgetPasswordVerify extends Component {
     constructor(props) {
         super(props);
+        console.log('345' + JSON.stringify(this.props.email));
+        this.forgetCreateCode(this.props.email);
+    }
+    componentDidMount(){
+        this.forgetVerify();
     }
 
-    forgetUser = async (values) => {
+    forgetCreateCode = async (values) => {
         try {
-            const response = await this.props.dispatch(forgetUser(values));
-
-            console.log('???????'+JSON.stringify(response.responseBody.response));
-
+            const response = await this.props.dispatch(forgetCreateCode(values));
+            console.log('generate code' + response);
             if (!response.success) {
                 throw response;
             }
-            if(response.responseBody.ack==='success'){
-                this.verifyView();
+        } catch (error) {
+            let errorText;
+            if (error.message) {
+                errorText = error.message
+            }
+            errorText = error.responseBody.response.reason;
+            Alert.alert(
+                'code Error!',
+                errorText,
+                [
+                    {
+                        text: 'Cancel',
+                        onPress: () => console.log('Cancel Pressed'),
+                        style: 'cancel',
+                    },
+                ]
+            );
+        }
+    }
+
+    forgetVerify = async (values) => {
+        try {
+            const response = await this.props.dispatch(forgetVerify(values));
+            console.log('Verify1' + response.responseBody.response.code.verified);
+            if (!response.success) {
+                throw response;
+            }
+            //response.responseBody.ack==='success'
+            console.log('hello'+response.responseBody.response.code.verified);
+            if(response.responseBody.response.code.verified===false &&
+                response.responseBody.response.code.email===this.props.email.email){
+                //set verified ==true and jump to rest Password view
+                console.log('hello');
+                this.ForgetPasswordResetView();
             }
 
         } catch (error) {
             let errorText;
             if (error.message) {
-                errorText = error.message;
+                errorText = error.message
             }
-            console.log('997'+JSON.stringify(error.responseBody));
-            errorText = error.responseBody.response.reason;
+            errorText = error.responseBody;
             Alert.alert(
-                'Something wrong.',
+                'Please check your email.',
                 errorText,
                 [
                     {
@@ -70,16 +105,16 @@ class ForgotPasswordScreen extends Component {
     }
 
     onSubmit = (values) => {
-        console.log(JSON.stringify(values)+'999');
-        this.forgetUser(values);
+        values.password=this.props.email.email;
+        console.log(JSON.stringify(values)+'888');
+        this.forgetVerify(values);
     }
-    loginView() {
-        Actions.login();
+
+    ForgetPasswordResetView() {
+        Actions.ForgetPasswordReset({email:this.props.email.email});
+        console.log(JSON.stringify(this.props.email)+'777');
     }
-    verifyView() {
-        console.log('567'+JSON.stringify(this.props.forgetUser.response.response.email));
-        Actions.ForgetPasswordVerify({email:this.props.forgetUser.response.response.email});
-    }
+
     renderTextInput = (field) => {
         const {meta: {touched, error}, label, secureTextEntry, maxLength, keyboardType, placeholder, input: {onChange, ...restInput}} = field;
         return (
@@ -96,21 +131,22 @@ class ForgotPasswordScreen extends Component {
             </View>
         );
     }
+
     render() {
-        const {handleSubmit, forgetUser} = this.props;
+        const {handleSubmit, forgetVerify} = this.props;
 
         return (
             <Background>
                 {/*<BackButton goBack={() => navigation.navigate('login')}/>*/}
-                {(forgetUser&&forgetUser.isLoading) && <Loader />}
+                {(forgetVerify && forgetVerify.isLoading) && <Loader/>}
                 <Logo/>
-                <Header>Restore Password</Header>
+                <Header>Verify Page</Header>
                 <Field
-                    name="email"
-                    placeholder="Email"
+                    name="code"
+                    placeholder="code"
                     component={this.renderTextInput}/>
                 <Button mode="contained" onPress={handleSubmit(this.onSubmit)} style={styles.button}>
-                    Send Reset Instructions
+                    Check the code
                 </Button>
                 <TouchableOpacity
                     style={styles.back}
@@ -146,7 +182,7 @@ const styles = StyleSheet.create({
 export default compose(
     connect(mapStateToProps, mapDispatchToProps),
     reduxForm({
-        form: "forget",
-        validate
+        form: "code",
+        //validate
     })
-)(ForgotPasswordScreen);
+)(ForgetPasswordVerify);

@@ -8,6 +8,8 @@ import userReducer from "./reducer/userReducer";
 import avatarReducer from "./reducer/avatarReducer";
 import activityReducer from "./reducer/activityReducer";
 import vegieReducer from "./reducer/vegieReducer";
+import userPwdReducer from "./reducer/userPwdReducer";
+
 
 const reducers = {
     authReducer,
@@ -15,6 +17,7 @@ const reducers = {
     avatarReducer,
     activityReducer,
     vegieReducer,
+    userPwdReducer,
     form: formReducer
 };
 
@@ -30,3 +33,4 @@ const rootReducer = (state, action) => {
 }
 
 export default rootReducer;
+
