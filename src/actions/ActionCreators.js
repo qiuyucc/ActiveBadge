@@ -1,4 +1,4 @@
-const baseUrl = "http://localhost:3333/";
+const baseUrl = "http://172.27.243.241:3333/";
 
 export const fetchAvatar = () => (dispatch) => {
     dispatch(avatarLoading());

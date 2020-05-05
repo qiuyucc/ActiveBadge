@@ -14,6 +14,7 @@ import ForgetPasswordVerify from "./ForgetPasswordVerify";
 import ForgetPasswordReset from "./ForgetPasswordReset";
 
 
+
 export default  class Routers extends Component{
     render(){
         return(
@@ -40,3 +41,4 @@ export default  class Routers extends Component{
         );
     }
 }
+

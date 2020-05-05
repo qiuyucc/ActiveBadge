@@ -10,6 +10,7 @@ import activityReducer from "./reducer/activityReducer";
 import vegieReducer from "./reducer/vegieReducer";
 import userPwdReducer from "./reducer/userPwdReducer";
 
+
 const reducers = {
     authReducer,
     userReducer,
@@ -32,3 +33,4 @@ const rootReducer = (state, action) => {
 }
 
 export default rootReducer;
+
