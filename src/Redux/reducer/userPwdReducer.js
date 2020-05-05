@@ -95,6 +95,36 @@ const forgetVerify = (state = {}, action) => {
     }
 }
 
+//delete the code
+const forgetDeleteCode = (state = {}, action) => {
+    switch (action.type) {
+        case "DELETE_CODE_LOADING":
+            return {
+                isLoading: true,
+                isError: false,
+                isSuccess: false,
+                errors: null
+            }
+        case "DELETE_CODE_SUCCESS":
+            return {
+                isLoading: false,
+                isError: false,
+                isSuccess: true,
+                errors: null,
+                response: action.payload
+            }
+        case "DELETE_CODE_FAIL":
+            return {
+                isLoading: false,
+                isError: true,
+                isSuccess: false,
+                errors: action.payload
+            }
+        default:
+            return state;
+    }
+}
+
 //generate the code
 const forgetResetPwd = (state = {}, action) => {
     switch (action.type) {
@@ -129,5 +159,6 @@ export default combineReducers({
     forgetUser,
     forgetCreateCode,
     forgetVerify,
+    forgetDeleteCode,
     forgetResetPwd
 });

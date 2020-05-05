@@ -78,8 +78,7 @@ export const forgetVerify = (payload) => {
         }
     }
 }
-
-///forget password function, user input code verify.
+///reset pwd
 export const forgetResetPwd = (payload) => {
     return async (dispatch) => {
         try {
@@ -99,6 +98,33 @@ export const forgetResetPwd = (payload) => {
         } catch (error) {
             dispatch({
                 type: "RESET_PWD_FAIL",
+                payload: error.responseBody
+            });
+            return error;
+        }
+    }
+}
+
+///delete code
+export const forgetDeleteCode = (payload) => {
+    return async (dispatch) => {
+        try {
+            dispatch({
+                type: "DELETE_CODE_LOADING"
+            });
+            const response = await fetchApi("reset/delete_code", "POST", payload, 200);
+            if (response.success) {
+                dispatch({
+                    type: "DELETE_CODE_SUCCESS",
+                    payload:response.responseBody
+                });
+                return response;
+            } else {
+                throw response;
+            }
+        } catch (error) {
+            dispatch({
+                type: "DELETE_CODE_FAIL",
                 payload: error.responseBody
             });
             return error;

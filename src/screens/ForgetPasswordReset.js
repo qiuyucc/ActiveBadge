@@ -10,7 +10,7 @@ import {theme} from '../core/theme';
 import Button from '../components/Button';
 import {connect} from "react-redux";
 import {Actions} from "react-native-router-flux";
-import {forgetResetPwd} from "../actions/userPwd.action";
+import {forgetResetPwd, forgetDeleteCode} from "../actions/userPwd.action";
 import {Field, reduxForm} from "redux-form";
 import {compose} from "redux";
 import Loader from "../components/loader";
@@ -25,7 +25,7 @@ const validate = (values) => {
 };
 const mapStateToProps = (state) => ({
     forgetResetPwd: state.userPwdReducer.forgetResetPwd,
-    //forgetVerify: state.userPwdReducer.forgetVerify
+    forgetDeleteCode: state.userPwdReducer.forgetDeleteCode
 })
 const mapDispatchToProps = (dispatch) => ({
     dispatch
@@ -34,9 +34,38 @@ const mapDispatchToProps = (dispatch) => ({
 class ForgetPasswordReset extends Component {
     constructor(props) {
         super(props);
-        console.log('345' + JSON.stringify(this.props.email));
-    }
+        console.log('345' + JSON.stringify({email:this.props.email}));
 
+        this.forgetDeleteCode({email:this.props.email});
+    }
+    forgetDeleteCode = async (values) => {
+        try {
+            const response = await this.props.dispatch(forgetDeleteCode(values));
+            console.log('Delete code: ' + response.responseBody.response);
+            if (!response.success) {
+                throw response;
+            }
+            //response.responseBody.ack==='success'
+            console.log('delete' + response.responseBody.response);
+        } catch (error) {
+            let errorText;
+            if (error.message) {
+                errorText = error.message
+            }
+            errorText = error.responseBody;
+            Alert.alert(
+                'delete wrong.',
+                errorText,
+                [
+                    {
+                        text: 'OK',
+                        onPress: () => console.log('Cancel Pressed'),
+                        style: 'cancel',
+                    },
+                ]
+            );
+        }
+    }
     forgetResetPwd = async (values) => {
         try {
             const response = await this.props.dispatch(forgetResetPwd(values));
@@ -46,7 +75,6 @@ class ForgetPasswordReset extends Component {
             }
             //response.responseBody.ack==='success'
             console.log('hello' + response.responseBody.response);
-
             this.loginView();
 
         } catch (error) {
@@ -71,7 +99,6 @@ class ForgetPasswordReset extends Component {
 
     onSubmit = (values) => {
         values.email = this.props.email;
-        console.log(JSON.stringify(values) + '888');
         this.forgetResetPwd(values);
     }
 

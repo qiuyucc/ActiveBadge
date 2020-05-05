@@ -105,7 +105,6 @@ class ForgetPasswordVerify extends Component {
     }
 
     onSubmit = (values) => {
-        //console.log(JSON.stringify(values)+'888');
         values.password=this.props.email.email;
         console.log(JSON.stringify(values)+'888');
         this.forgetVerify(values);
@@ -113,7 +112,7 @@ class ForgetPasswordVerify extends Component {
 
     ForgetPasswordResetView() {
         Actions.ForgetPasswordReset({email:this.props.email.email});
-        //{email:this.props.email}
+        console.log(JSON.stringify(this.props.email)+'777');
     }
 
     renderTextInput = (field) => {
