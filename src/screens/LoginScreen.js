@@ -1,5 +1,5 @@
 import React, {Component}from 'react';
-import {TouchableOpacity, StyleSheet, Text, View, AsyncStorage} from 'react-native';
+import {TouchableOpacity, StyleSheet, Text, View, AsyncStorage, Alert} from 'react-native';
 import Background from '../components/Background';
 import Logo from '../components/Logo';
 import Header from '../components/Header';
