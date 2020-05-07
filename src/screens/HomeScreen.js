@@ -4,18 +4,18 @@ import Button from "../components/Button";
 import React, {Component} from "react";
 import Header from "../components/Header";
 import {baseUrl} from "../Redux/imageUrl";
-import {ListItem} from "react-native-elements";
+import {ListItem, ButtonGroup} from "react-native-elements";
 import Loader from "../components/loader";
 import {connect} from "react-redux";
-import VegieScreen from "./VegieScreen";
+import Leaderboard from 'react-native-leaderboard';
 
 
 
 const mapStateToProps = state => {
     return {
         users: state.userReducer.getUser,
-        // activityRecord: state.activityReducer.getActivityRecord,
-        // vegieRecord: state.vegieReducer.getVegieRecord
+        activityRank: state.activityReducer.getActivityRank,
+        vegieRank:state.vegieReducer.getVegieRank,
     }
 }
 
@@ -24,73 +24,74 @@ const mapDispatchToProps = (dispatch) =>({
 });
 
 class HomeScreen extends Component {
-    render() {
+
+    state={
+        filter:0
+    }
+
+    RenderHeader(){
         const {users: {userDetails}} = this.props;
-        const email = userDetails? userDetails.email:"";
-        const now = new Date();
-        const date = now.getDate() + "-" + (now.getMonth() + 1) + "-" + now.getFullYear();
+        const imagePath=userDetails ? userDetails.image : "";
+        return(
+            <View colors={[, '#1da2c6', '#1695b7']}
+                  style={{ backgroundColor: '#119abf', padding: 10, paddingTop: 20, alignItems: 'center' }}>
 
-        const renderActivityItem = ({item, index}) => {
+                <Text style={{ fontSize: 25, color: 'white', }}>Overall Popularity (%)</Text>
+                <View style={{
+                    flexDirection: 'row', justifyContent: 'center', alignItems: 'center',
+                    marginBottom: 15, marginTop: 20
+                }}>
+                    <Image style={{ height: 85, width: 85, borderRadius: 40,  borderWidth:3, borderColor:"#FFF" }}
+                         source={{uri: baseUrl +imagePath }}/>
+                </View>
+                <ButtonGroup
+                    onPress={(x) => { this.setState({ filter: x }) }}
+                    selectedIndex={this.state.filter}
+                    buttons={['Activity', 'Vegie']}
+                    containerStyle={{ height: 30 }} />
+            </View>
+        );
+    }
+    render() {
+
+
+        if (this.props.activityRank.isLoading && this.props.vegieRank.isLoading) {
             return (
-                <ListItem
-                    key={index}
-                    title={item.description}
-                    subtitle={item.mins + " mins"}
-                    hideChevron={true}
-                    leftAvatar={{source: {uri: baseUrl + item.name}}}
-                ></ListItem>
+                <Loader/>
             );
-        }
-
-        const renderVegieItem = ({item, index}) => {
+        } else if (this.props.activityRank.errors && this.props.vegieRank.errors) {
             return (
-                <ListItem
-                    key={index}
-                    title={item.description}
-                    subtitle={item.count + " Box / Each"}
-                    hideChevron={true}
-                    leftAvatar={{source: {uri: baseUrl + item.name}}}
-                ></ListItem>
+                <View>
+                    <Text>{props.activityRank.errors}</Text>
+                    <Text>{props.vegieRank.errors}</Text>
+                </View>
             );
-        }
+        } else {
+            const props ={
+                labelBy: 'description',
+                sortBy: 'percent',
+                data: this.state.filter>0?  this.props.vegieRank.vegieRank:this.props.activityRank.activityRank,
+                icon:'url',
+                sort: this.sort
+            }
 
-        // if (this.props.activityRecord.isLoading && this.props.vegieRecord.isLoading) {
-        //     return (
-        //         <Loader/>
-        //     );
-        // } else if (this.props.activityRecord.errors && this.props.vegieRecord.errors) {
-        //     return (
-        //         <View>
-        //             <Text>{props.activityRecord.errors}</Text>
-        //             <Text>{props.vegieRecord.errors}</Text>
-        //         </View>
-        //     );
-        // } else {
+
             return (
-            <View style={styles.container}>
+                <View style={{ flex: 1, backgroundColor: 'white', }}>
                 <SafeAreaView style={{flex: 1}}>
                     <TouchableOpacity
                         style={{alignItems: "flex-start", margin: 16}}
                         onPress={this.props.navigation.openDrawer}>
                         <FontAwesome5 name="bars" size={24} color="#161924"/>
                     </TouchableOpacity>
-                    {/*<View styles={{flex: 1,padding:20}}>*/}
-                    {/*    <FlatList data={this.props.activityRecord.activityRecordDetails.filter(record=>record.date===date && record.email===email)}*/}
-                    {/*              renderItem={renderActivityItem}*/}
-                    {/*              keyExtractor={(record,index)=>index.toString()}/>*/}
-                    {/*</View>*/}
-                    {/*<Text>{"\n"}</Text>*/}
-                    {/*<View styles={{flex: 1,padding:20}}>*/}
-                    {/*    <FlatList data={this.props.vegieRecord.vegieRecordDetails.filter(record=>record.date===date && record.email===email)}*/}
-                    {/*              renderItem={renderVegieItem}*/}
-                    {/*              keyExtractor={(record,index)=>index.toString()}/>*/}
-                    {/*</View>*/}
+                    {this.RenderHeader()}
+                    <Leaderboard {...props} />
                 </SafeAreaView>
             </View>
             );
 
         }
-  //  }
+    }
 }
 
 const styles = StyleSheet.create({

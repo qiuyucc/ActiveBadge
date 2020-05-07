@@ -21,8 +21,8 @@ export default  class Routers extends Component{
             <Router>
                 <Scene key="root" hideNavBar={true}>
                     <Scene key ="auth" hideNavBar={true} initial={!this.props.isLoggedIn}>
-                        <Scene key="login" component={Login} title="Login"  initial={true}/>
-                        <Scene key="register" component={Register} title="Register" />
+                        <Scene key="login" component={Login} title="Login" initial={true} />
+                        <Scene key="register" component={Register} title="Register"  />
                         <Scene key="forgetPassword" component={ForgetPassword} title="ForgetPassword" />
                         <Scene key="ForgetPasswordVerify" component={ForgetPasswordVerify} title="ForgetPasswordVerify" />
                         <Scene key="ForgetPasswordReset" component={ForgetPasswordReset} title="ForgetPasswordReset" />

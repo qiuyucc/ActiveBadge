@@ -1,5 +1,5 @@
 import React, {Component}from 'react';
-import {TouchableOpacity, StyleSheet, Text, View, AsyncStorage, Alert} from 'react-native';
+import {TouchableOpacity, StyleSheet, Text, View, Alert} from 'react-native';
 import Background from '../components/Background';
 import Logo from '../components/Logo';
 import Header from '../components/Header';
@@ -24,25 +24,21 @@ class LoginScreen extends Component{
             const response =  await this.props.dispatch(loginUser(values));
             console.log(response);
             if (!response.success) {
+                Alert.alert(
+                    'Login Error!',
+                    'Username or password wrong!',
+                    [
+                        {
+                            text: 'Cancel',
+                            onPress: () => console.log('Cancel Pressed'),
+                            style: 'cancel',
+                        }
+                    ]
+                );
                 throw response;
             }
         } catch (error) {
-            let errorText;
-            if (error.message) {
-                errorText = error.message
-            }
-            errorText = error.responseBody;
-            Alert.alert(
-                'Login Error!',
-                errorText,
-                [
-                    {
-                        text: 'Cancel',
-                        onPress: () => console.log('Cancel Pressed'),
-                        style: 'cancel',
-                    },
-                ]
-            );
+           return error;
         }
     }
 
@@ -164,4 +160,3 @@ export default compose(
         validate
     })
 )(LoginScreen);
-

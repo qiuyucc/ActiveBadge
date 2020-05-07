@@ -249,3 +249,76 @@ export const postVegieRecord =(email, name, description, date,count) =>(dispatch
         .catch(error => { console.log('post vegie record', error.message);
             alert('Your record cannot be posted\nError: ' + error.message); });
 };
+
+
+export const fetchActivityRank = () => (dispatch) => {
+    dispatch(activityRankLoading());
+    return fetch(baseUrl + 'activityrecord/rank')
+        .then(response => {
+                if (response.ok) {
+                    return response;
+                }
+                else {
+                    const error  = new Error('Error ' + response.status + ': ' + response.statusText);
+                    error.response = response;
+                    throw error;
+                }
+            },
+            error => {
+                const errMess = new Error(error.message)
+                throw errMess;
+            })
+        .then(response => response.json())
+        .then(activities => dispatch(addActivityRank(activities)))
+        .catch(error => dispatch(activityRankFailed(error.message)))
+};
+
+export const activityRankLoading = () => ({
+    type: "ACTIVITY_RANK_LOADING",
+});
+
+export const activityRankFailed = (errMess) => ({
+    type: "ACTIVITY_RANK_FAILED",
+    payload: errMess
+});
+
+export const addActivityRank = (activities) => ({
+    type: "ADD_ACTIVITY_RANK",
+    payload: activities
+});
+
+export const fetchVegieRank = () => (dispatch) => {
+    dispatch(vegieRankLoading());
+    return fetch(baseUrl + 'vegierecord/rank')
+        .then(response => {
+                if (response.ok) {
+                    return response;
+                }
+                else {
+                    const error  = new Error('Error ' + response.status + ': ' + response.statusText);
+                    error.response = response;
+                    throw error;
+                }
+            },
+            error => {
+                const errMess = new Error(error.message)
+                throw errMess;
+            })
+        .then(response => response.json())
+        .then(vegies => dispatch(addVegieRank(vegies)))
+        .catch(error => dispatch(vegieRankFailed(error.message)))
+};
+
+export const vegieRankLoading = () => ({
+    type: "VEGIE_RANK_LOADING",
+});
+
+export const vegieRankFailed = (errMess) => ({
+    type: "VEGIE_RANK_FAILED",
+    payload: errMess
+});
+
+export const addVegieRank = (vegies) => ({
+    type: "ADD_VEGIE_RANK",
+    payload: vegies
+});

@@ -68,7 +68,6 @@ export const fetchApi = async (url, method, body, statusCode, token = null, load
             return result;
 
         }
-
         let errorBody;
         const errorText = await response.text();
 

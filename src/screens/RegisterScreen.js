@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {View, Text, StyleSheet, TouchableOpacity,TextInput} from 'react-native';
+import {View, Text, StyleSheet, TouchableOpacity, TextInput, Alert} from 'react-native';
 import Background from '../components/Background';
 import Logo from '../components/Logo';
 import Header from '../components/Header';
@@ -23,11 +23,21 @@ class RegisterScreen extends Component {
         try {
             const response =  await this.props.dispatch(createNewUser(values));
             if (!response.success) {
+                Alert.alert(
+                    'Registration Error!',
+                    'Email has already been taken!',
+                    [
+                        {
+                            text: 'Cancel',
+                            onPress: () => console.log('Cancel Pressed'),
+                            style: 'cancel',
+                        }
+                    ]
+                );
                 throw response;
             }
         } catch (error) {
-            const newError = new ErrorUtils(error, "register error");
-            newError.showAlert();
+          return  error;
         }
     }
 
