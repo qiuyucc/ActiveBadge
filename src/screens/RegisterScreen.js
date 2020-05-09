@@ -25,19 +25,19 @@ class RegisterScreen extends Component {
             if (!response.success) {
                 Alert.alert(
                     'Registration Error!',
-                    'Email has already been taken!',
+                    'Email has been taken!',
                     [
                         {
                             text: 'Cancel',
                             onPress: () => console.log('Cancel Pressed'),
                             style: 'cancel',
-                        }
+                        },
                     ]
                 );
                 throw response;
             }
         } catch (error) {
-          return  error;
+            return error;
         }
     }
 

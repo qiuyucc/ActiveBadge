@@ -59,9 +59,23 @@ class VegieScreen extends Component{
         }
     }
 
+    formatDate(date) {
+        let d = new Date(date),
+            month = '' + (d.getMonth() + 1),
+            day = '' + d.getDate(),
+            year = d.getFullYear();
+
+        if (month.length < 2)
+            month = '0' + month;
+        if (day.length < 2)
+            day = '0' + day;
+
+        return [year, month, day].join('-');
+    }
+
     submitVegie(){
         const now = new Date();
-        const date = now.getDate() + "-" + (now.getMonth() + 1) + "-" + now.getFullYear();
+        const date = this.formatDate(now);
         const user = this.state.user;
         const name = this.state.name;
         const description = this.state.description;

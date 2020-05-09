@@ -34,7 +34,7 @@ class HomeScreen extends Component {
         const imagePath=userDetails ? userDetails.image : "";
         return(
             <View colors={[, '#1da2c6', '#1695b7']}
-                  style={{ backgroundColor: '#119abf', padding: 10, paddingTop: 20, alignItems: 'center' }}>
+                  style={{ backgroundColor: '#b7a2db', padding: 10, paddingTop: 20, alignItems: 'center' }}>
 
                 <Text style={{ fontSize: 25, color: 'white', }}>Overall Popularity (%)</Text>
                 <View style={{

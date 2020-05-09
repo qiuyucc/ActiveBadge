@@ -26,11 +26,25 @@ const mapDispatchToProps = (dispatch) =>({
 class DailyScreen2 extends Component {
 
 
+    formatDate(date) {
+        let d = new Date(date),
+            month = '' + (d.getMonth() + 1),
+            day = '' + d.getDate(),
+            year = d.getFullYear();
+
+        if (month.length < 2)
+            month = '0' + month;
+        if (day.length < 2)
+            day = '0' + day;
+
+        return [year, month, day].join('-');
+    }
+
     render() {
         const {users: {userDetails}} = this.props;
         const email = userDetails?userDetails.email:"";
         const now = new Date();
-        const date = now.getDate() + "-" + (now.getMonth() + 1) + "-" + now.getFullYear();
+        const date = this.formatDate(now);
 
         const renderActivityItem = ({item, index}) => {
             return (

@@ -96,9 +96,75 @@ const getVegieRank =(state ={},action)=>{
     }
 }
 
+
+const getVegieRecordByVegie =(state ={},action)=>{
+    switch(action.type){
+
+        case "VEGIE_RECORD_REPORT1_LOADING":
+            return {
+                isLoading:true,
+                isError: false,
+                isSuccess:false,
+                recordByVegie:[],
+                errors:null
+            }
+        case "ADD_VEGIE_RECORD_REPORT1":
+            return {
+                isLoading:false,
+                isError:false,
+                isSuccess:true,
+                recordByVegie:action.payload,
+                errors:null
+            }
+        case "VEGIE_RECORD_REPORT1_FAILED":
+            return {
+                isLoading:false,
+                isError: true,
+                isSuccess: false,
+                recordByVegie: null,
+                errors:action.payload
+            }
+        default:
+            return state;
+    }
+}
+
+const getVegieRecordByDate =(state ={},action)=>{
+    switch(action.type){
+
+        case "VEGIE_RECORD_REPORT2_LOADING":
+            return {
+                isLoading:true,
+                isError: false,
+                isSuccess:false,
+                recordByDate:[],
+                errors:null
+            }
+        case "ADD_VEGIE_RECORD_REPORT2":
+            return {
+                isLoading:false,
+                isError:false,
+                isSuccess:true,
+                recordByDate:action.payload,
+                errors:null
+            }
+        case "VEGIE_RECORD_REPORT2_FAILED":
+            return {
+                isLoading:false,
+                isError: true,
+                isSuccess: false,
+                recordByDate: null,
+                errors:action.payload
+            }
+        default:
+            return state;
+    }
+}
 export default combineReducers(
     {
         getVegie,
         getVegieRecord,
-        getVegieRank
+        getVegieRank,
+        getVegieRecordByVegie,
+        getVegieRecordByDate
     });

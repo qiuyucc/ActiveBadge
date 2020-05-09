@@ -1,5 +1,5 @@
 import React, {Component}from 'react';
-import {TouchableOpacity, StyleSheet, Text, View, Alert} from 'react-native';
+import {TouchableOpacity, StyleSheet, Text, View, AsyncStorage, Alert} from 'react-native';
 import Background from '../components/Background';
 import Logo from '../components/Logo';
 import Header from '../components/Header';
@@ -26,19 +26,19 @@ class LoginScreen extends Component{
             if (!response.success) {
                 Alert.alert(
                     'Login Error!',
-                    'Username or password wrong!',
+                    'Wrong email or password',
                     [
                         {
                             text: 'Cancel',
                             onPress: () => console.log('Cancel Pressed'),
                             style: 'cancel',
-                        }
+                        },
                     ]
                 );
                 throw response;
             }
         } catch (error) {
-           return error;
+            return error;
         }
     }
 
@@ -160,3 +160,4 @@ export default compose(
         validate
     })
 )(LoginScreen);
+
