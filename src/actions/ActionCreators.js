@@ -249,3 +249,224 @@ export const postVegieRecord =(email, name, description, date,count) =>(dispatch
         .catch(error => { console.log('post vegie record', error.message);
             alert('Your record cannot be posted\nError: ' + error.message); });
 };
+
+
+export const fetchActivityRank = () => (dispatch) => {
+    dispatch(activityRankLoading());
+    return fetch(baseUrl + 'activityrecord/rank')
+        .then(response => {
+                if (response.ok) {
+                    return response;
+                }
+                else {
+                    const error  = new Error('Error ' + response.status + ': ' + response.statusText);
+                    error.response = response;
+                    throw error;
+                }
+            },
+            error => {
+                const errMess = new Error(error.message)
+                throw errMess;
+            })
+        .then(response => response.json())
+        .then(activities => dispatch(addActivityRank(activities)))
+        .catch(error => dispatch(activityRankFailed(error.message)))
+};
+
+export const activityRankLoading = () => ({
+    type: "ACTIVITY_RANK_LOADING",
+});
+
+export const activityRankFailed = (errMess) => ({
+    type: "ACTIVITY_RANK_FAILED",
+    payload: errMess
+});
+
+export const addActivityRank = (activities) => ({
+    type: "ADD_ACTIVITY_RANK",
+    payload: activities
+});
+
+export const fetchVegieRank = () => (dispatch) => {
+    dispatch(vegieRankLoading());
+    return fetch(baseUrl + 'vegierecord/rank')
+        .then(response => {
+                if (response.ok) {
+                    return response;
+                }
+                else {
+                    const error  = new Error('Error ' + response.status + ': ' + response.statusText);
+                    error.response = response;
+                    throw error;
+                }
+            },
+            error => {
+                const errMess = new Error(error.message)
+                throw errMess;
+            })
+        .then(response => response.json())
+        .then(vegies => dispatch(addVegieRank(vegies)))
+        .catch(error => dispatch(vegieRankFailed(error.message)))
+};
+
+export const vegieRankLoading = () => ({
+    type: "VEGIE_RANK_LOADING",
+});
+
+export const vegieRankFailed = (errMess) => ({
+    type: "VEGIE_RANK_FAILED",
+    payload: errMess
+});
+
+export const addVegieRank = (vegies) => ({
+    type: "ADD_VEGIE_RANK",
+    payload: vegies
+});
+
+
+export const fetchActivityReportByActivity = (email,start,end) => (dispatch) => {
+    dispatch(activityReport1Loading());
+    return fetch(baseUrl + `activityrecord/reportbyactivity/`+email+`/`+start+`/`+end)
+        .then(response => {
+                if (response.ok) {
+                    return response;
+                }
+                else {
+                    const error  = new Error('Error ' + response.status + ': ' + response.statusText);
+                    error.response = response;
+                    throw error;
+                }
+            },
+            error => {
+                const errMess = new Error(error.message)
+                throw errMess;
+            })
+        .then(response => response.json())
+        .then(activitiesReport1 => dispatch(addActivityReport1(activitiesReport1)))
+        .catch(error => dispatch(activityReport1Failed(error.message)))
+};
+
+export const activityReport1Loading = () => ({
+    type: "ACTIVITY_RECORD_REPORT1_LOADING",
+});
+
+export const activityReport1Failed = (errMess) => ({
+    type: "ACTIVITY_RECORD_REPORT1_FAILED",
+    payload: errMess
+});
+
+export const addActivityReport1 = (activitiesReport1) => ({
+    type: "ADD_ACTIVITY_RECORD_REPORT1",
+    payload: activitiesReport1
+});
+
+
+export const fetchActivityReportByDate = (email,start,end) => (dispatch) => {
+    dispatch(activityReport2Loading());
+    return fetch(baseUrl + `activityrecord/reportbydate/`+email+`/`+start+`/`+end)
+        .then(response => {
+                if (response.ok) {
+                    return response;
+                }
+                else {
+                    const error  = new Error('Error ' + response.status + ': ' + response.statusText);
+                    error.response = response;
+                    throw error;
+                }
+            },
+            error => {
+                const errMess = new Error(error.message)
+                throw errMess;
+            })
+        .then(response => response.json())
+        .then(activitiesReport2 => dispatch(addActivityReport2(activitiesReport2)))
+        .catch(error => dispatch(activityReport2Failed(error.message)))
+};
+
+export const activityReport2Loading = () => ({
+    type: "ACTIVITY_RECORD_REPORT2_LOADING",
+});
+
+export const activityReport2Failed = (errMess) => ({
+    type: "ACTIVITY_RECORD_REPORT2_FAILED",
+    payload: errMess
+});
+
+export const addActivityReport2 = (activitiesReport2) => ({
+    type: "ADD_ACTIVITY_RECORD_REPORT2",
+    payload: activitiesReport2
+});
+
+
+export const fetchVegieReportByVegie = (email,start,end) => (dispatch) => {
+    dispatch(vegieReport1Loading());
+    return fetch(baseUrl + `vegierecord/reportbyvegie/`+email+`/`+start+`/`+end)
+        .then(response => {
+                if (response.ok) {
+                    return response;
+                }
+                else {
+                    const error  = new Error('Error ' + response.status + ': ' + response.statusText);
+                    error.response = response;
+                    throw error;
+                }
+            },
+            error => {
+                const errMess = new Error(error.message)
+                throw errMess;
+            })
+        .then(response => response.json())
+        .then(vegies => dispatch(addVegieReport1(vegies)))
+        .catch(error => dispatch(vegieReport1Failed(error.message)))
+};
+
+export const vegieReport1Loading = () => ({
+    type: "VEGIE_RECORD_REPORT1_LOADING",
+});
+
+export const vegieReport1Failed = (errMess) => ({
+    type: "VEGIE_RECORD_REPORT1_FAILED",
+    payload: errMess
+});
+
+export const addVegieReport1 = (vegies) => ({
+    type: "ADD_VEGIE_RECORD_REPORT1",
+    payload: vegies
+});
+
+
+export const fetchVegieReportByDate= (email,start,end) => (dispatch) => {
+    dispatch(vegieReport2Loading());
+    return fetch(baseUrl + `vegierecord/reportbydate/`+email+`/`+start+`/`+end)
+        .then(response => {
+                if (response.ok) {
+                    return response;
+                }
+                else {
+                    const error  = new Error('Error ' + response.status + ': ' + response.statusText);
+                    error.response = response;
+                    throw error;
+                }
+            },
+            error => {
+                const errMess = new Error(error.message)
+                throw errMess;
+            })
+        .then(response => response.json())
+        .then(vegies => dispatch(addVegieReport2(vegies)))
+        .catch(error => dispatch(vegieReport2Failed(error.message)))
+};
+
+export const vegieReport2Loading = () => ({
+    type: "VEGIE_RECORD_REPORT2_LOADING",
+});
+
+export const vegieReport2Failed = (errMess) => ({
+    type: "VEGIE_RECORD_REPORT2_FAILED",
+    payload: errMess
+});
+
+export const addVegieReport2 = (vegies) => ({
+    type: "ADD_VEGIE_RECORD_REPORT2",
+    payload: vegies
+});

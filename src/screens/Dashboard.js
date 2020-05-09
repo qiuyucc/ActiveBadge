@@ -25,7 +25,7 @@ import Report from "./ReportScreen";
 import Vegie from "./VegieScreen";
 import Daily from "./DailyScreen2";
 
-import {fetchAvatar, fetchVegie, fetchActivity,fetchActivityRecord,fetchVegieRecord} from "../actions/ActionCreators";
+import {fetchAvatar, fetchVegie, fetchActivity,fetchActivityRecord,fetchVegieRecord,fetchActivityRank,fetchVegieRank} from "../actions/ActionCreators";
 
 
 
@@ -33,6 +33,8 @@ class Dashboard extends Component<>{
 
 
     componentDidMount() {
+        this.props.fetchActivityRank();
+        this.props.fetchVegieRank();
         this.props.fetchAvatar();
         this.props.fetchVegie();
         this.props.fetchActivity();
@@ -144,7 +146,9 @@ const mapDispatchToProps = (dispatch) =>({
     fetchVegie:()=>dispatch(fetchVegie()),
     fetchActivity:()=>dispatch(fetchActivity()),
     fetchActivityRecord:()=>dispatch(fetchActivityRecord()),
-    fetchVegieRecord:()=>dispatch(fetchVegieRecord())
+    fetchVegieRecord:()=>dispatch(fetchVegieRecord()),
+    fetchActivityRank:()=>dispatch(fetchActivityRank()),
+    fetchVegieRank:()=>dispatch(fetchVegieRank())
 });
 const styles = StyleSheet.create({
     container: {

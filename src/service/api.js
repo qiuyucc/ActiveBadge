@@ -1,4 +1,5 @@
 const BASE_URL = "http://172.27.243.241:3333/";
+
 export const api = async (url, method, body = null, headers = {}) => {
 
     try {
@@ -67,7 +68,6 @@ export const fetchApi = async (url, method, body, statusCode, token = null, load
             return result;
 
         }
-
         let errorBody;
         const errorText = await response.text();
 

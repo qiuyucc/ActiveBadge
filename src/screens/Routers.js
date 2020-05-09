@@ -10,6 +10,9 @@ import Avatar from "./AvatarScreen";
 import Activity from "./ActivityScreen";
 import Profile from "./ProfileScreen";
 import SignOut from "./SignoutScreen";
+import ForgetPasswordVerify from "./ForgetPasswordVerify";
+import ForgetPasswordReset from "./ForgetPasswordReset";
+
 
 
 export default  class Routers extends Component{
@@ -18,9 +21,11 @@ export default  class Routers extends Component{
             <Router>
                 <Scene key="root" hideNavBar={true}>
                     <Scene key ="auth" hideNavBar={true} initial={!this.props.isLoggedIn}>
-                        <Scene key="login" component={Login} title="Login"  initial={true}/>
-                        <Scene key="register" component={Register} title="Register" />
+                        <Scene key="login" component={Login} title="Login" initial={true}/>
+                        <Scene key="register" component={Register} title="Register"  />
                         <Scene key="forgetPassword" component={ForgetPassword} title="ForgetPassword" />
+                        <Scene key="ForgetPasswordVerify" component={ForgetPasswordVerify} title="ForgetPasswordVerify" />
+                        <Scene key="ForgetPasswordReset" component={ForgetPasswordReset} title="ForgetPasswordReset" />
                     </Scene>
                     <Scene key="app" hideNavBar={true} initial={this.props.isLoggedIn}>
                         <Scene Key="dashboard" component={Dashboard} title="Dashboard" initial={true}/>
@@ -36,3 +41,4 @@ export default  class Routers extends Component{
         );
     }
 }
+
