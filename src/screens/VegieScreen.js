@@ -79,8 +79,9 @@ class VegieScreen extends Component{
         const user = this.state.user;
         const name = this.state.name;
         const description = this.state.description;
-        const point = parseInt(this.state.point) +10;
         const count = this.state.count;
+        const point = parseInt(this.state.point) +10*count;
+
         this.props.postVegieRecord(user,name,description,date,count);
         this.updatePoint(point);
 
@@ -179,7 +180,7 @@ class VegieScreen extends Component{
                         <View style={styles.centeredView}>
                             <View style={styles.modalSuccess}>
                                 <Header>CONGRATULATIONS!</Header>
-                                <Text style={{fontSize: 18, fontWeight: 'bold', margin: 25}}>You've received 10 badger
+                                <Text style={{fontSize: 18, fontWeight: 'bold', margin: 25}}>You've received {this.state.count *10} badger
                                     points</Text>
                                 {/*<Button mode="contained" style={{width: '60%'}}*/}
                                 {/*        onPress={() => this.toggleSuccessModal()}>OK</Button>*/}

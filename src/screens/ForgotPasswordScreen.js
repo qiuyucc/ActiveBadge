@@ -73,6 +73,7 @@ class ForgotPasswordScreen extends Component {
         console.log(JSON.stringify(values)+'999');
         this.forgetUser(values);
     }
+
     loginView() {
         Actions.login();
     }
@@ -101,7 +102,7 @@ class ForgotPasswordScreen extends Component {
 
         return (
             <Background>
-                {/*<BackButton goBack={() => navigation.navigate('login')}/>*/}
+                <BackButton goBack={() => this.loginView}/>
                 {(forgetUser&&forgetUser.isLoading) && <Loader />}
                 <Logo/>
                 <Header>Restore Password</Header>

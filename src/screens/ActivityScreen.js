@@ -94,32 +94,10 @@ class ActivityScreen extends Component {
         const user = this.state.user;
         const name = this.state.name;
         const description = this.state.description;
-        const point = parseInt(this.state.point) +10;
+        const point = parseInt(this.state.point) + totalmins;
         this.props.postActivityRecord(user, name, description, totalmins, date);
         this.updatePoint(point);
-        // Alert.alert(
-        //     'Congrauation!',
-        //     'Email ' + this.state.user + "\n" +
-        //     'name ' + this.state.name + "\n" +
-        //     'description ' + this.state.description + "\n" +
-        //     'total mins ' + totalmins+"\n"+
-        //     'point' + point+"\n"+
-        //     'date '  +date
-        //     ,[
-        //         {
-        //             text: 'CANCEL',
-        //             onPress: () => this.resetForm(),
-        //             style: 'cancel'
-        //         },
-        //         {
-        //             text: 'OK',
-        //             onPress: () => {
-        //                 this.toggleTimeModal()
-        //             }
-        //         }
-        //     ]
-        // )
-            this.toggleSuccessModal();
+        this.toggleSuccessModal();
         this.toggleTimeModal();
     }
 
@@ -136,19 +114,6 @@ resetForm()
     })
 }
 
-//   postActivityRecord = async (user, name, description, totalmins, date) => {
-//     try {
-//         const response = await this.props.dispatch(postActivityRecord(user, name, description, totalmins, date));
-//         if (!response.success) {
-//             throw response;
-//             this.toggleSuccessModal();
-//             this.resetForm();
-//         }
-//     } catch (error) {
-//         const newError = new ErrorUtils(error, "upload profile error");
-//         newError.showAlert();
-//     }
-// }
 
 
 render()
@@ -277,10 +242,8 @@ render()
                     <View style={styles.centeredView}>
                         <View style={styles.modalSuccess}>
                             <Header>CONGRATULATIONS!</Header>
-                            <Text style={{fontSize: 18, fontWeight: 'bold', margin: 25}}>You've received 10 badger
+                            <Text style={{fontSize: 18, fontWeight: 'bold', margin: 25}}>You've received {(this.state.hour * 60 + parseInt(this.state.mins))} badger
                                 points</Text>
-                            {/*<Button mode="contained" style={{width: '60%'}}*/}
-                            {/*        onPress={() => this.toggleSuccessModal()}>OK</Button>*/}
                         </View>
                     </View>
                 </Modal>

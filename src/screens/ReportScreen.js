@@ -67,7 +67,7 @@ class ReportScreen extends Component{
 
                const date =[];
                this.props.activityReport2.recordByDate.map((item)=>{
-                   date.push(item.date.substring(6,7)+'-'+item.date.substring(9,10));
+                   date.push(item.date.substring(5,10));
                })
                const mins =[];
                this.props.activityReport2.recordByDate.map((item)=>{
@@ -76,19 +76,34 @@ class ReportScreen extends Component{
 
                const dateVegie =[];
                this.props.vegieReport2.recordByDate.map((item)=>{
-                   dateVegie.push(item.date.substring(6,7)+'-'+item.date.substring(9,10));
+                   dateVegie.push(item.date.substring(5,10));
                })
                const nums =[];
                this.props.vegieReport2.recordByDate.map((item)=>{
                    nums.push(item.totalnum);
                })
+               const totalNum=[];
+               const averageNum=[];
+               this.props.vegieReport1.recordByVegie.map((item)=>{
+                   totalNum.push(item.totalNum);
+                   averageNum.push(item.averageTime);
+               });
 
+               const totalTime=[];
+               const averageTime=[];
+               this.props.activityReport1.recordByActivity.map((item)=>{
+                   totalTime.push(item.totalTime);
+                   averageTime.push(item.averageTime);
+               });
 
                return(
                    <ScrollView>
                    <View style={{  padding: 10, paddingTop: 20, alignItems: 'center' }}>
                        <BackButton goBack={()=>this.setState({search:true,
                                                                         show:false})}></BackButton>
+                       <Text style={{fontSize:20, fontWeight:'bold', margin:10}}>Report :{this.state.startDate}-{this.state.endDate}</Text>
+                       <Text style={{fontSize:18, fontWeight:'normal', margin:5}}>Total Activities Mins: {totalTime[0]} Average: {averageTime[0]} per/day</Text>
+                       <Text style={{fontSize:18, fontWeight:'normal', margin:5}}>Total Vegies Number: {totalNum[0]} Average: {averageNum[0]} per/day</Text>
                        <Text style={{fontSize:20, fontWeight:'bold', margin:10}}>Pie Chart - Activity</Text>
                        <PieChart
                        data={this.props.activityReport1.recordByActivity}
@@ -333,7 +348,7 @@ class ReportScreen extends Component{
                 [
                     {
                         text: 'Cancel',
-                        onPress: () => console.log('Cancel Pressed'),
+                        onPress: () => {console.log('Cancel Pressed');this.setState({search:true})},
                         style: 'cancel',
                     },
                 ]
