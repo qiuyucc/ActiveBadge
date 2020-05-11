@@ -44,7 +44,6 @@ class SignoutScreen extends Component<> {
         return(
             <Background>
                 <Text style={styles.textStyle}>Do you really need logout ? {userDetails ? userDetails.username : ""}</Text>
-                <Text style={styles.textStyle}> {userDetails ? userDetails.image : ""}</Text>
                 <Button  mode="contained" style={styles.button} onPress={this.logoutUser}>
                     Logout
                 </Button>
