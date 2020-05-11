@@ -9,7 +9,7 @@ export const emailValidator = email => {
 
 export const passwordValidator = password => {
   if (!password || password.length <= 0) return 'Password cannot be empty.';
-
+  if (password.length<8) return 'Password requires at least 8 characters ';
   return '';
 };
 

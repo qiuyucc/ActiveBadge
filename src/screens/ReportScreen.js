@@ -69,19 +69,23 @@ class ReportScreen extends Component{
                this.props.activityReport2.recordByDate.map((item)=>{
                    date.push(item.date.substring(5,10));
                })
+               date.push('..');
                const mins =[];
                this.props.activityReport2.recordByDate.map((item)=>{
                    mins.push(item.mins);
                })
+               mins.push(0);
 
                const dateVegie =[];
                this.props.vegieReport2.recordByDate.map((item)=>{
                    dateVegie.push(item.date.substring(5,10));
                })
+               dateVegie.push('..');
                const nums =[];
                this.props.vegieReport2.recordByDate.map((item)=>{
                    nums.push(item.totalnum);
                })
+               nums.push(0);
                const totalNum=[];
                const averageNum=[];
                this.props.vegieReport1.recordByVegie.map((item)=>{
@@ -102,59 +106,67 @@ class ReportScreen extends Component{
                        <BackButton goBack={()=>this.setState({search:true,
                                                                         show:false})}></BackButton>
                        <Text style={{fontSize:20, fontWeight:'bold', margin:10}}>Report :{this.state.startDate}-{this.state.endDate}</Text>
-                       <Text style={{fontSize:18, fontWeight:'normal', margin:5}}>Total Activities Mins: {totalTime[0]} Average: {averageTime[0]} per/day</Text>
-                       <Text style={{fontSize:18, fontWeight:'normal', margin:5}}>Total Vegies Number: {totalNum[0]} Average: {averageNum[0]} per/day</Text>
+                       <Text style={{fontSize:18, fontWeight:'normal', margin:5}}>Tot Activities Mins: {totalTime[0]} avg: {averageTime[0]} per/day</Text>
+                       <Text style={{fontSize:18, fontWeight:'normal', margin:5}}>Tot Vegies Number: {totalNum[0]} avg: {averageNum[0]} per/day</Text>
                        <Text style={{fontSize:20, fontWeight:'bold', margin:10}}>Pie Chart - Activity</Text>
-                       <PieChart
-                       data={this.props.activityReport1.recordByActivity}
-                       width={Dimensions.get("window").width}
-                       height={220}
-                       chartConfig={{
-                           backgroundColor: "#e26a00",
-                           backgroundGradientFrom: "#fb8c00",
-                           backgroundGradientTo: "#ffa726",
-                           decimalPlaces: 2, // optional, defaults to 2dp
-                           color: (opacity = 1) => `rgba(255, 255, 255, ${opacity})`,
-                           style: {
-                               borderRadius: 16
-                           },
-                           propsForDots: {
-                               r: "6",
-                               strokeWidth: "2",
-                               stroke: "#ffa726"
-                           }
-                       }}
-                       accessor="totalbyActivity"
-                       backgroundColor="transparent"
-                       paddingLeft="15"
-                       ></PieChart>
-                       <Text style={{fontSize:20, fontWeight:'bold', margin:10}}>Bar Chart - Activity</Text>
-                       <BarChart
-                           data={{
-                               labels: date,
-                               datasets: [
-                                   {
-                                       data: mins
+
+                           <PieChart
+                               data={this.props.activityReport1.recordByActivity}
+                               width={Dimensions.get("window").width}
+                               height={220}
+                               chartConfig={{
+                                   backgroundColor: "#e26a00",
+                                   backgroundGradientFrom: "#fb8c00",
+                                   backgroundGradientTo: "#ffa726",
+                                   decimalPlaces: 2, // optional, defaults to 2dp
+                                   color: (opacity = 1) => `rgba(255, 255, 255, ${opacity})`,
+                                   style: {
+                                       borderRadius: 16
+                                   },
+                                   propsForDots: {
+                                       r: "6",
+                                       strokeWidth: "2",
+                                       stroke: "#ffa726"
+                                   },
+                                   graphStyle:{
+                                       marginVertical: 8,
                                    }
-                               ]
-                           }}
-                           width={Dimensions.get("window").width} // from react-native
-                           height={220}
-                           chartConfig={{
-                               backgroundColor: '#022173',
-                               backgroundGradientFrom: '#022173',
-                               backgroundGradientTo: '#1b3fa0',
-                               color: (opacity = 1) => `rgba(255, 255, 255, ${opacity})`,
-                               style: {
-                                   borderRadius: 16
-                               },
-                               propsForDots: {
-                                   r: "6",
-                                   strokeWidth: "2",
-                                   stroke: "#ffa726"
                                }
-                           }}
-                       />
+                               }
+                               accessor="totalbyActivity"
+                               backgroundColor="transparent"
+                               paddingLeft="15"
+                           ></PieChart>
+
+
+
+
+                           <Text style={{fontSize:20, fontWeight:'bold', margin:10}}>Bar Chart - Activity</Text>
+                           <BarChart
+                               data={{
+                                   labels: date,
+                                   datasets: [
+                                       {
+                                           data: mins
+                                       }
+                                   ]
+                               }}
+                               width={Dimensions.get("window").width} // from react-native
+                               height={220}
+                               chartConfig={{
+                                   backgroundColor: '#022173',
+                                   backgroundGradientFrom: '#022173',
+                                   backgroundGradientTo: '#1b3fa0',
+                                   color: (opacity = 1) => `rgba(255, 255, 255, ${opacity})`,
+                                   propsForDots: {
+                                       r: "6",
+                                       strokeWidth: "2",
+                                       stroke: "#ffa726"
+                                   }
+                               }}
+                           />
+
+
 
                        <Text style={{fontSize:20, fontWeight:'bold', margin:10}}>Contribution Graph - Activity</Text>
                            <ContributionGraph

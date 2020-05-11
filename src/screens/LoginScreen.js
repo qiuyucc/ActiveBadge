@@ -24,21 +24,21 @@ class LoginScreen extends Component{
             const response =  await this.props.dispatch(loginUser(values));
             console.log(response);
             if (!response.success) {
-                Alert.alert(
-                    'Login Error!',
-                    'Wrong email or password',
-                    [
-                        {
-                            text: 'Cancel',
-                            onPress: () => console.log('Cancel Pressed'),
-                            style: 'cancel',
-                        },
-                    ]
-                );
+
                 throw response;
             }
         } catch (error) {
-            return error;
+            Alert.alert(
+                'Login Error!',
+                'Wrong email or password',
+                [
+                    {
+                        text: 'Cancel',
+                        onPress: () => console.log('Cancel Pressed'),
+                        style: 'cancel',
+                    },
+                ]
+            );
         }
     }
 
