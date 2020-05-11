@@ -18,26 +18,24 @@ import {emailValidator, passwordValidator,nameValidator} from '../core/utils';
 
 class RegisterScreen extends Component {
 
-
     createNewUser = async (values) => {
         try {
             const response =  await this.props.dispatch(createNewUser(values));
             if (!response.success) {
-                Alert.alert(
-                    'Registration Error!',
-                    'Email has been taken!',
-                    [
-                        {
-                            text: 'Cancel',
-                            onPress: () => console.log('Cancel Pressed'),
-                            style: 'cancel',
-                        },
-                    ]
-                );
                 throw response;
             }
         } catch (error) {
-            return error;
+            Alert.alert(
+                'Registration Error!',
+                'Email has been taken!',
+                [
+                    {
+                        text: 'Cancel',
+                        onPress: () => console.log('Cancel Pressed'),
+                        style: 'cancel',
+                    },
+                ]
+            );
         }
     }
 
